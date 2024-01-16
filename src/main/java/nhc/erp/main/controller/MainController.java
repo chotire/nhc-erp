@@ -284,6 +284,7 @@ public class MainController {
 			result.setData("dlt_programAuthority", authorityList);
 			/* 권한 끝 */
 			
+			/* 결과 메시지 세팅 */
 			result.setStatusMsg(result.STATUS_SUCESS, "메뉴정보가 조회 되었습니다.");
 		} catch (Exception ex) {
 			ex.printStackTrace();
