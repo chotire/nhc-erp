@@ -20,8 +20,6 @@ public class MainController {
 	@ResponseBody
 	public Map<String, Object> getInitMainInfo() {
 		Result result = new Result();
-		// Map memberParam = null;
-		// Map setInfo = null;
 		
 		try {
 			List<Map<String, Object>> menuList = new ArrayList<Map<String, Object>>();
