@@ -170,7 +170,7 @@
 		<xf:group class="login_wrap type2">
 			<xf:group class="login_container" id="">
 				<xf:group id="" tagname="h1">
-					<xf:image alt="인스웨이브" id="" src="../../cm/images/contents/logo02.png" style=""></xf:image>
+					<xf:image alt="인스웨이브" id="" src="../../cm/images/contents/logo02.png" style=";height:50px;"></xf:image>
 				</xf:group>
 				<xf:group class="login_contents" id="grp_loginInfo" style="">
 					<xf:group id="" tagname="ul">
