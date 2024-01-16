@@ -23,6 +23,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'sdcit.prunus:prunus-security'
     implementation 'sdcit.prunus:prunus-websquare-adaptor'
     implementation 'sdcit.prunus:prunus-persistence-mybatis'

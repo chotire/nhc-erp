@@ -1,4 +1,4 @@
-﻿﻿﻿﻿export default {
+export default {
   "WebSquare": {
     "convertPageXML": {
       "@value": "true"
@@ -25,7 +25,7 @@
       },
       "common": {
         "@name": "",
-        "@value": ""
+        "@value": "false"
       }
     },
     "allValue": {
@@ -86,13 +86,19 @@
       "@value": "euc-kr"
     },
     "initScript": {
-      "@value": "false"
+      "#cdata": function() {  		
+		gcm.hkey.init($p);
+        com.hkey.setShortKey($p.main());
+        com.win.setLangCode(com.win.getLanguage());
+        gcm.win.setHistoryBackEvent(); 
+        },
+      "@value": "true"
     },
     "clearMemory": {
       "@value": "false"
     },
     "stylesheet": {
-      "@earlyImportList": "/cm/css/base.css",
+      "@earlyImportList": "/cm/css/base.css,/cm/css/contents.css",
       "@enable": "true",
       "@import": "link",
       "@value": "stylesheet_ext.css"
@@ -121,7 +127,16 @@
         "@value": "true"
       }
     },
-    "engine": {},
+    "engine": {
+      "module": [
+        {
+          "@src": "/cm/js/commonGlobal.js"
+        },
+        {
+          "@src": "/cm/js/commonScope.js"
+        }
+      ]
+    },
     "ModelUtil": {
       "copyChildrenNodes": {
         "@refresh": "false"
@@ -151,16 +166,19 @@
         "@value": "true"
       },
       "preSubmitFunction": {
-        "@value": "presubmit"
+        "@value": "gcm.sbm.preSubmitFunction"
       },
       "callbackSubmitFunction": {
-        "@value": ""
+        "@value": "gcm.sbm.callbackSubmitFunction"
       },
       "requestID": {
         "@value": ""
       },
       "makeGlobalObject": {
         "@value": "true"
+      },
+      "submitErrorHandler": {
+        "@value": "gcm.sbm.submitErrorHandler"
       }
     },
     "visibleHelper": {
@@ -173,6 +191,7 @@
         "@value": ""
       },
       "variable": {
+        "@clone": "com",
         "@value": "scwin"
       },
       "scriptCache": {
@@ -632,38 +651,6 @@
         }
       ]
     },
-    "projectCommon": {
-      "module": [
-        {
-          "@name": "$c.common",
-          "@src": "/cm/project_udc/common.xml"
-        },
-        {
-          "@name": "$c.str",
-          "@src": "/cm/project_udc/commonStr.xml"
-        },
-        {
-          "@name": "$c.num",
-          "@src": "/cm/project_udc/commonNum.xml"
-        },
-        {
-          "@name": "$c.menu",
-          "@src": "/cm/project_udc/commonMenu.xml"
-        },
-        {
-          "@name": "$c.code",
-          "@src": "/cm/project_udc/commonCode.xml"
-        },
-        {
-          "@name": "$c.popup",
-          "@src": "/cm/project_udc/commonPopup.xml"
-        },
-        {
-          "@name": "$c.util",
-          "@src": "/cm/project_udc/commonUtil.xml"
-        }
-      ]
-    },
     "xhr": {
       "@useActiveXObject": "false"
     },
@@ -672,6 +659,14 @@
     },
     "requirejs": {
       "@timeout": "20"
+    },
+    "postScript": {
+      "@value": "false"
+    },
+    "pageURLPrefix": {
+      "@ignoreW2xPath": "true",
+      "@type": "function",
+      "@value": "gcm.win.getI18NUrl"
     }
   }
 }
