@@ -31,6 +31,7 @@ dependencies {
     implementation "sdcit.prunus.biz:prunus-biz-acl-menu:${prunusVersion}"
     implementation "sdcit.prunus.biz:prunus-biz-acl-resource:${prunusVersion}"
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
+    implementation 'tmaxsoft.tibero:tibero6-jdbc:1.1'
     implementation 'com.h2database:h2'
     
     // for JSP

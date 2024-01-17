@@ -1,4 +1,4 @@
-package com.inswave.wrm.i18n;
+package nhc.erp.common.inswave.i18n;
 
 import java.io.*;
 import java.net.*;

@@ -1,4 +1,4 @@
-package nhc.erp.common;
+package nhc.erp.main.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;

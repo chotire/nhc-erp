@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nhc.erp.sample.mapper.SampleMapper">
+    <select id="selectAll" parameterType="nhc.erp.sample.vo.SampleVo" resultType="nhc.erp.sample.vo.SampleVo">
+    	/* SampleMapper.selectAll */
+        <include refid="select"></include>
+    </select>
+    <select id="selectPageList" parameterType="nhc.erp.sample.vo.SampleVo" resultType="nhc.erp.sample.vo.SampleVo">
+    	/* SampleMapper.selectPageList */
+        <include refid="select"></include>
+    </select>
+    <select id="selectPage" parameterType="nhc.erp.sample.vo.SampleVo" resultType="nhc.erp.sample.vo.SampleVo">
+    	/* SampleMapper.selectPage */
+        <include refid="select"></include>
+    </select>
+    <sql id="select">
+    	SELECT ID
+             , VENDOR
+             , DISPLAY_SIZE
+             , DELETED
+          FROM LAPTOP
+         WHERE VENDOR = #{vendor}
+           AND DELETED = 0
+    </sql>
+    <insert id="insertSampleData" parameterType="nhc.erp.sample.vo.SampleVo">
+    	/* SampleMapper.insertSampleData */
+        INSERT 
+          INTO LAPTOP 
+          	 (
+          	   ID
+			 , VENDOR
+			 , DISPLAY_SIZE
+			 , DELETED
+			 , CRE_USER
+			 , CRE_DATE
+			 , CRE_ADDR
+			 , CRE_DEPT
+			 , MOD_USER
+			 , MOD_DATE
+			 , MOD_ADDR
+			 , MOD_DEPT
+			 )
+		VALUES
+			 (
+			   LAPTOP_ID_SEQUENCE.NEXTVAL
+			 , #{vendor}
+			 , #{displaySize}
+			 , 0
+			 , 'prunus'
+			 , SYSTIMESTAMP
+			 , '127.0.0.1'
+			 , NULL
+			 , 'prunus'
+			 , SYSTIMESTAMP
+			 , '127.0.0.1'
+			 , NULL
+			 )
+    </insert>
+    <update id="updateSampleData" parameterType="nhc.erp.sample.vo.SampleVo">
+    	/* SampleMapper.updateSampleData */
+        UPDATE LAPTOP
+           SET VENDOR       = #{vendor}
+             , DISPLAY_SIZE = #{displaySize}
+             , MOD_USER		= 'prunus'
+			 , MOD_DATE		= SYSTIMESTAMP
+			 , MOD_ADDR		= '127.0.0.1'
+			 , MOD_DEPT		= NULL
+         WHERE ID           = #{id}
+    </update>
+    <delete id="deleteSampleData" parameterType="string">
+    	/* SampleMapper.deleteSampleData */
+        UPDATE LAPTOP
+           SET DELETED = 1
+         WHERE ID      		= #{id}
+    </delete>
+</mapper>

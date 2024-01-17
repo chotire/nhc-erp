@@ -1,4 +1,4 @@
-package com.inswave.wrm.util;
+package nhc.erp.common.inswave.util;
 
 import java.util.HashMap;
 import java.util.List;

@@ -3,11 +3,16 @@ server:
   tomcat:
     additional-tld-skip-patterns: "serializer.jar"
 spring:
-#  datasource:
-#    driver-class-name: org.h2.Driver
-#    url: jdbc:h2:tcp://localhost/~/labor
-#    username: sa
-#    password:
+  sql.init.mode: embedded # always, embedded, never
+  datasource.hikari:
+    tibero:
+      driver-class-name: com.tmax.tibero.jdbc.TbDriver
+      jdbc-url: jdbc:tibero:thin:@192.168.0.28:8629:tibero
+      username: nhcerp
+      password: nhcerp1215
+  data.web.pageable:
+    default-page-size: 10
+    one-indexed-parameters: true # page number 를 '1'부터 시작한다. (default : false, start at 0)
   mvc:
     view:
       prefix: /WEB-INF/views/
@@ -16,7 +21,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
     jdbc-type-for-null: null
-  mapper-locations: classpath*:mappers/**/*.xml
+  mapper-locations: classpath*:mapper/**/*.xml
   type-aliases-package: nhc.erp
 prunus:
   websquare:
@@ -27,9 +32,9 @@ prunus:
       tenant: labor
       username-parameter: username
       password-parameter: password
-      maximum-password-age: 90 # 비밀번호 유효기간
+      maximum-password-age: 90      # 비밀번호 유효기간
       maximum-failed-attempts: 5
-      lock-time-duration: 3600000 # 1시간
+      lock-time-duration: 3600000   # 1시간
     access:
       whitelisted-endpoints:
         - /**
@@ -40,6 +45,13 @@ prunus:
         - /websquare/**
         - /resources/**
         - /webjars/**
+  persistence:
+    data:
+      audit:
+        modify-on-create: true
+    mybatis:
+      audit.enabled: true
+      pagination.enabled: true
 logging:
   level:
     nhc.erp: debug
@@ -47,6 +59,7 @@ logging:
     org.springframework.security: debug
 
 ---
+
 spring:
   config:
     activate:
