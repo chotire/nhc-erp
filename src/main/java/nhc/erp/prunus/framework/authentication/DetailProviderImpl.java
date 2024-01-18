@@ -1,10 +1,15 @@
 package nhc.erp.prunus.framework.authentication;
 
-import org.springframework.stereotype.Component;
-import prunus.security.authentication.DetailsProvider;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+
+import nhc.erp.common.login.vo.UserInfo;
+import prunus.security.authentication.DetailsProvider;
 
 /**
  * @author 조용상
@@ -22,6 +27,13 @@ public class DetailProviderImpl implements DetailsProvider {
      */
     @Override
     public Map<String, Object> getDetails(HttpServletRequest request, String tenant, String username) {
-        return Map.of("empNo", "e2004323");
+    	
+    	UserInfo userInfo = UserInfo.builder().tenant(tenant)
+											.userId(username)
+											.userNm("농협관리자")
+											.deptCd("0000")
+											.deptNm("IT유지보수").build();
+    	
+    	return userInfo;
     }
 }

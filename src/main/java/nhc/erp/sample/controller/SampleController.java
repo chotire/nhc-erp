@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import nhc.erp.common.login.annotation.LoginInfo;
+import nhc.erp.common.login.vo.UserInfo;
 import nhc.erp.sample.service.SampleService;
 import nhc.erp.sample.vo.SampleVo;
 
@@ -37,7 +39,10 @@ public class SampleController {
      * http://localhost:8080/samplePageList?vendor=lg&page=2&size=10&sort=id,ASC&sort=displaySize,ASC
      */
     @GetMapping(value = "/samplePageList")
-    public List<SampleVo> getPageList(SampleVo sampleVo, Pageable pageable) {
+    public List<SampleVo> getPageList(SampleVo sampleVo, Pageable pageable, @LoginInfo UserInfo userInfo) {
+    	
+    	System.out.println(userInfo.toString());
+    	
         return service.getPageList(sampleVo, pageable);
     }
     
