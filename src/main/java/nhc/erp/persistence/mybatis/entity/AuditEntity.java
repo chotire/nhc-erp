@@ -1,5 +1,7 @@
 package nhc.erp.persistence.mybatis.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -12,9 +14,9 @@ import prunus.persistence.data.audit.entity.AuditableEntity;
 @Setter
 @AttributeOverrides({
 	@AttributeOverride(name="createdBy", column=@Column(name="CRE_USER")),
-	@AttributeOverride(name="createdDate", column=@Column(name="CRE_DATE")),
+	@AttributeOverride(name="creDate", column=@Column(name="CRE_DATE")),
 	@AttributeOverride(name="modifiedBy", column=@Column(name="MOD_USER")),
-	@AttributeOverride(name="modifiedDate", column=@Column(name="MOD_DATE"))
+	@AttributeOverride(name="modDate", column=@Column(name="MOD_DATE"))
 })
 public class AuditEntity extends AuditableEntity {
 	@PersistDept
@@ -24,4 +26,13 @@ public class AuditEntity extends AuditableEntity {
 	@UpdateDept
 	@Column(name="MOD_DEPT")
 	private String updateDept;
+	
+	@CreDate
+	@Column(name="CRE_DATE")
+	private String creDate;
+	
+	@ModDate
+	@Column(name="MOD_DATE")
+	private String modDate;
+	
 }

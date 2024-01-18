@@ -35,6 +35,9 @@ public class SampleVo extends AuditEntity {
     private LocalDateTime createdDate;
     
     @JsonIgnore
+    private String creDate;
+    
+    @JsonIgnore
     private String createdRemoteAddr;
     
     @JsonIgnore
@@ -45,6 +48,9 @@ public class SampleVo extends AuditEntity {
     
     @JsonIgnore
     private LocalDateTime modifiedDate;
+    
+    @JsonIgnore
+    private String modDate;
     
     @JsonIgnore
     private String modifiedRemoteAddr;
