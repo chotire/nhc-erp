@@ -3,20 +3,14 @@ server:
   tomcat:
     additional-tld-skip-patterns: "serializer.jar"
 spring:
-  sql.init.mode: embedded # always, embedded, never
-  datasource.hikari:
-    tibero:
-      driver-class-name: com.tmax.tibero.jdbc.TbDriver
-      jdbc-url: jdbc:tibero:thin:@192.168.0.28:8629:tibero
-      username: nhcerp
-      password: nhcerp1215
-  data.web.pageable:
-    default-page-size: 10
-    one-indexed-parameters: true # page number 를 '1'부터 시작한다. (default : false, start at 0)
   mvc:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false           # JPA 를 사용하는 프로젝트는 반드시 open-in-view 속성을 false 로 지정하세요.   
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -52,11 +46,35 @@ prunus:
     mybatis:
       audit.enabled: true
       pagination.enabled: true
+  multi-datasource:
+    primary: nhcerp
+    private-key: MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAtq4B+v/RnQ1yJm1Vz0QKPs+fxANBF1cnuAwYbj5O0/EvvC90SUye0m/M3FQrlliVAC/xGDZCBj5RsCcVDP1y7wIDAQABAkA2ojPVbUyzO6I3+9r98ctenZmadZ6x7E7krDliPyA0IhwJcizN4cCat3OJVEWLRR/PBWfELvqtY5lL3QIKddCBAiEA5/AS05uQfObqT98m1sP18fz6UK3DgskmaPaaa4mcx+UCIQDJobZa4PQop0nzrd8wDCIgWJ0xHQmlKePJLQhny8p6QwIgPM+uL/smrAjjQGPSzBZ/Ap6Ahuy4SS8yOe0GWdGv4J0CIQC34sSFIy1pOhAmrUaj8hzZdRd+6CWYvJhiK7DDwMbbMwIgZwdHQzO9ygVoNjzP4rmTkJrsB6xqJOSBMp2P4TVSXkk=
+    strict: true
+    p6spy:
+      enabled: true
+    datasources:
+      nhcerp:      # 데이터소스 이름
+        driver-class-name: com.tmax.tibero.jdbc.TbDriver
+        url: jdbc:tibero:thin:@192.168.0.28:8629:tibero
+        username: nhcerp
+        password: ENC(BJcc76rTcnUIX9KJsw0TSTjbVtOEF5E+gzhBzCI73dn9uw5dgFyB/ufkS+XtGInLtX+3cUr10kaYOe1eszE+pA==)
+        p6spy: true
+      wrm:        # 데이터소스 이름
+        driver-class-name: org.mariadb.jdbc.Driver
+        url: jdbc:mariadb://127.0.0.1:3306/WRM
+        username: APP
+        password: ENC(Jq8aLfq8FXWmO1re2M3A1aZztlg0ShF7y9QItZhcbMKkQYMKlKL7TY5G91FmF95QtUSYuWDMCk3vNVhInzb3Xg==)
+        p6spy: true
 logging:
   level:
-    nhc.erp: debug
-    org.springframework.web: debug
-    org.springframework.security: debug
+    nhc.erp: info
+    prunus: debug
+    org.springframework.web: info
+    org.springframework.security: info
+    org.springframework.transaction: debug
+    org.springframework.jdbc.datasource: debug
+    org.springframework.jdbc.support: debug
+    com.zaxxer.hikari.pool.HikariPool: debug
 
 ---
 

@@ -1,17 +1,7 @@
 package nhc.erp.persistence.mybatis.datasource;
 
-import java.util.Map;
-
-import javax.sql.DataSource;
-
-import org.springframework.context.annotation.Bean;
-
-import com.zaxxer.hikari.HikariConfig;
-
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class DataSourceConfig {
+	/*
     public static final String DEFAULT_DATASOURCE_NAME = "tibero";
     private final Map<String, HikariConfig> hikariDataSourceConfig;
 
@@ -28,4 +18,5 @@ public class DataSourceConfig {
     public DataSource routingDataSource(DataSourceResolver dataSourceResolver) {
         return new RoutingDataSource(dataSourceResolver);
     }
+    */
 }

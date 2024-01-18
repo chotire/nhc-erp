@@ -48,9 +48,9 @@ public class DefaultWeb2FileCacheImpl extends AbstractWeb2File {
 			
 			LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] ################### Initialize DefaultWeb2FileCacheImpl #####################");
             LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] baseDir           : " + GMLXMLBaseDir);
-            LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] url  				: " + GMLXMLBaseUrl);
+            LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] url  		: " + GMLXMLBaseUrl);
             LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] useCache        	: " + useCache);
-            LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] storageType  		: " + storageType);
+            LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] storageType	: " + storageType);
 		} catch (Exception e) {
 			LogUtil.exception("[DefaultWeb2FileCacheImpl.initialize] Exception occurs", e );
 			throw e;

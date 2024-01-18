@@ -2,8 +2,6 @@ package nhc.erp.sample.vo;
 
 import java.time.LocalDateTime;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -11,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import nhc.erp.persistence.mybatis.entity.AuditEntity;
 
 @Getter
@@ -18,6 +17,7 @@ import nhc.erp.persistence.mybatis.entity.AuditEntity;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class SampleVo extends AuditEntity {
 	private long id;
 
@@ -57,9 +57,4 @@ public class SampleVo extends AuditEntity {
     
     @JsonIgnore
     private String updateDept;
-    
-    @Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
 }
