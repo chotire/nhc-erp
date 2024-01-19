@@ -11,14 +11,12 @@ import nhc.erp.common.resolver.UserInfoArgumentResolver;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
 	@Autowired
 	private UserInfoArgumentResolver userInfoArgumentResolver;
 	
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(userInfoArgumentResolver);
-		//WebMvcConfigurer.super.addArgumentResolvers(resolvers);
-	}
-	
+		// WebMvcConfigurer.super.addArgumentResolvers(resolvers);
+	}	
 }

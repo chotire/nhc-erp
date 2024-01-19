@@ -1,7 +1,5 @@
 package nhc.erp.persistence.mybatis.entity;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -33,6 +31,5 @@ public class AuditEntity extends AuditableEntity {
 	
 	@ModDate
 	@Column(name="MOD_DATE")
-	private String modDate;
-	
+	private String modDate;	
 }

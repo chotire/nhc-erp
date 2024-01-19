@@ -2,8 +2,6 @@ package nhc.erp.sample.vo;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.EntityListeners;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import nhc.erp.persistence.mybatis.entity.AuditEntity;
-import prunus.persistence.data.audit.listener.AuditingTrailListener;
 
 @Getter
 @Setter
