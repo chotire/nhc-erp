@@ -1,7 +1,9 @@
 package nhc.erp.sample.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,8 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import nhc.erp.common.login.annotation.LoginInfo;
+import nhc.erp.common.inswave.util.Result;
+import nhc.erp.sample.service.SampleCodeService;
 import nhc.erp.sample.service.SampleService;
+import nhc.erp.sample.vo.SampleCodeParam;
+import nhc.erp.sample.vo.SampleCodeVo;
 import nhc.erp.sample.vo.SampleVo;
 
 /**
@@ -24,6 +29,9 @@ import nhc.erp.sample.vo.SampleVo;
 public class SampleController {
 	@Autowired
 	private SampleService service;
+	
+	@Autowired
+	private SampleCodeService codeService;
 
 	/*
 	 * GET
@@ -39,7 +47,7 @@ public class SampleController {
      * http://localhost:8080/samplePageList?vendor=lg&page=2&size=10&sort=id,ASC&sort=displaySize,ASC
      */
     @GetMapping(value = "/samplePageList")
-    public List<SampleVo> getPageList(SampleVo sampleVo, Pageable pageable, @LoginInfo HashMap<String, Object> userInfo) {
+    public List<SampleVo> getPageList(SampleVo sampleVo, Pageable pageable) {
     	return service.getPageList(sampleVo, pageable);
     }
     
@@ -49,7 +57,7 @@ public class SampleController {
      */
     @GetMapping(value = "/samplePage")
     public Page<SampleVo> getPage(SampleVo sampleVo, Pageable pageable) {
-        return service.getPage(sampleVo, pageable);
+    	return service.getPage(sampleVo, pageable);
     }
     
     /*
@@ -76,8 +84,117 @@ public class SampleController {
      * DELETE
      * http://localhost:8080/deleteSampleData/106
      */
-    @DeleteMapping("/deleteSampleData/{id}")
+    @DeleteMapping(value = "/deleteSampleData/{id}")
     public void deleteSampleData(@PathVariable String id) {
         service.deleteSampleData(id);
     }
+    
+    @PostMapping("/sample/useYnList")
+	public Map<String, Object> getUseYnList() {
+		Result result = new Result();
+		try {
+			List<Map<String, Object>> useYnList = new ArrayList<Map<String,Object>>();
+			
+			Map<String, Object> useYnMap = new HashMap<String, Object>();
+			useYnMap.put("code", "Y");
+			useYnMap.put("codeNm", "사용");
+			useYnList.add(useYnMap);
+			
+			useYnMap = new HashMap<String, Object>();
+			useYnMap.put("code", "N");
+			useYnMap.put("codeNm", "사용안함");
+			useYnList.add(useYnMap);
+			
+			result.setData("useYnList", useYnList);
+			
+			/* 결과 메시지 세팅 */
+			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.setMsg(result.STATUS_ERROR, "");
+		}
+		
+		return result.getResult();
+	}
+    
+    @PostMapping(value = "/sample/commonCode/commonCodeList")
+	public Map<String, Object> getCommonCodeList(@RequestBody SampleCodeParam param) {
+		Result result = new Result();
+		
+		try {
+			@SuppressWarnings("unchecked")
+			Map<String, Object> searchMap = (Map<String, Object>)param.getSearchMap();
+			String searchCondition = (String)searchMap.get("searchCondition");
+			String searchKeyword = (String)searchMap.get("searchKeyword");
+			
+			SampleCodeVo sampleCodeVo = new SampleCodeVo();
+			sampleCodeVo.setSearchCondition(searchCondition);
+			sampleCodeVo.setSearchKeyword(searchKeyword);
+			
+			Page<Map<String, Object>> codeList = codeService.selectCommonCodeList(sampleCodeVo, param.getPagination().pageable());
+			result.setData("totalCnt", String.valueOf(codeList.getTotalElements()));
+			result.setData("commonCodeList", codeList.getContent());
+			
+			/* 결과 메시지 세팅 */
+			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.setMsg(result.STATUS_ERROR, "");
+		}
+
+		return result.getResult();
+	}
+    
+    @PostMapping(value = "/sample/commonCode/selectCodeDetailList")
+	public Map<String, Object> selectCodeDetailList(@RequestBody Map<String, Object> param) {
+    	Result result = new Result();
+		
+		try {
+			@SuppressWarnings("unchecked")
+			Map<String, Object> commonCodeMap = (Map<String, Object>)param.get("commonCodeMap");
+			String commonCodeId = (String)commonCodeMap.get("commonCodeId");
+			
+			List<Map<String, Object>> codeList = codeService.selectCodeDetailList(commonCodeId);
+			result.setData("codeDetailList", codeList);
+			
+			/* 결과 메시지 세팅 */
+			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.setMsg(result.STATUS_ERROR, "");
+		}
+
+		return result.getResult();
+	}
+    
+    @PostMapping(value = "/sample/commonCode/saveCommonCodeDetailList")
+	public Map<String, Object> saveCommonCodeDetailList(@RequestBody Map<String, Object> param) {
+    	Result result = new Result();
+		
+		try {
+			@SuppressWarnings("unchecked")
+			Map<String, Object> commonCodeMap = (Map<String, Object>)param.get("commonCodeMap");
+			String commonCodeId = (String)commonCodeMap.get("commonCodeId");
+			
+			@SuppressWarnings("unchecked")
+			List<Map<String, Object>> commonCodeList = (List<Map<String, Object>>)param.get("commonCodeList");
+			@SuppressWarnings("unchecked")
+			List<Map<String, Object>> codeDetailList = (List<Map<String, Object>>)param.get("codeDetailList");
+			
+			SampleCodeVo sampleCodeVo = new SampleCodeVo();
+			sampleCodeVo.setCommonCodeId(commonCodeId);
+			sampleCodeVo.setCommonCodeList(commonCodeList);
+			sampleCodeVo.setCodeDetailList(codeDetailList);
+			
+			codeService.saveCommonCodeDetailList(sampleCodeVo);
+			
+			/* 결과 메시지 세팅 */
+			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 저장 되었습니다.");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.setMsg(result.STATUS_ERROR, "");
+		}
+
+		return result.getResult();
+	}
 }

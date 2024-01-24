@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 80
   tomcat:
     additional-tld-skip-patterns: "serializer.jar"
 spring:
@@ -61,6 +61,14 @@ prunus:
         username: nhcerp
         password: ENC(BJcc76rTcnUIX9KJsw0TSTjbVtOEF5E+gzhBzCI73dn9uw5dgFyB/ufkS+XtGInLtX+3cUr10kaYOe1eszE+pA==)
         p6spy: true
+        hikari:
+          min-idle: 5
+          max-pool-size: 30
+          idle-timeout: 30000
+          pool-name: DevLogHikariCP
+          max-lifetime: 200000
+          connection-timeout: 300000
+          connection-test-query: SELECT 1 FROM DUAL
 #      wrm:        # 데이터소스 이름
 #        driver-class-name: org.mariadb.jdbc.Driver
 #        url: jdbc:mariadb://127.0.0.1:3306/WRM
@@ -71,6 +79,8 @@ logging:
   level:
     nhc.erp: info
     prunus: debug
+    org.hibernate.SQL: info
+    root: info
     org.springframework.web: info
     org.springframework.security: info
     org.springframework.transaction: debug

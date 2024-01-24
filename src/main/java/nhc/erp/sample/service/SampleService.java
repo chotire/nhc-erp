@@ -19,32 +19,26 @@ public class SampleService {
 	private SampleMapper mapper;
 
     public List<SampleVo> getAll(SampleVo sampleVo) {
-        // DataSourceNameContextHolder.set("tibero");
         return mapper.selectAll(sampleVo);
     }
     
     public List<SampleVo> getPageList(SampleVo sampleVo, Pageable pageable) {
-        // DataSourceNameContextHolder.set("tibero");
         return mapper.selectPageList(sampleVo, pageable);
     }
     
     public Page<SampleVo> getPage(SampleVo sampleVo, Pageable pageable) {
-    	// DataSourceNameContextHolder.set("tibero");
-        return new Paging<>(mapper.selectPage(sampleVo, pageable));
+    	return new Paging<>(mapper.selectPage(sampleVo, pageable));
     }
     
     public void insertSampleData(SampleVo sampleVo) {
-    	// DataSourceNameContextHolder.set("tibero");
-        mapper.insertSampleData(sampleVo);
+    	mapper.insertSampleData(sampleVo);
     }
     
     public void updateSampleData(SampleVo sampleVo) {
-    	// DataSourceNameContextHolder.set("tibero");
-        mapper.updateSampleData(sampleVo);
+    	mapper.updateSampleData(sampleVo);
     }
     
     public void deleteSampleData(String id) {
-    	// DataSourceNameContextHolder.set("tibero");
-        mapper.deleteSampleData(id);
+    	mapper.deleteSampleData(id);
     }
 }

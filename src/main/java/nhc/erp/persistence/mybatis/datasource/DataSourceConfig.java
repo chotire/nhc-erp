@@ -2,7 +2,7 @@ package nhc.erp.persistence.mybatis.datasource;
 
 public class DataSourceConfig {
 	/*
-    public static final String DEFAULT_DATASOURCE_NAME = "tibero";
+	public static final String DEFAULT_DATASOURCE_NAME = "tibero";
     private final Map<String, HikariConfig> hikariDataSourceConfig;
 
     public DataSourceConfig(Map<String, HikariConfig> hikariDataSourceConfig) {

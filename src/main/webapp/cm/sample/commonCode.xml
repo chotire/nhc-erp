@@ -1,0 +1,678 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+       
+    <head>
+               
+        <w2:type>COMPONENT</w2:type>
+               
+        <w2:buildDate/>
+               
+        <w2:MSA/>
+               
+        <xf:model>
+
+        	<w2:dataCollection baseNode="map">
+
+        		<w2:dataList baseNode="list" id="commonCodeList" repeatNode="map" saveRemovedData="true" style="">
+
+        			<w2:columnInfo>
+
+        				<w2:column id="chk" name="선택" dataType="text"></w2:column>
+        				<w2:column dataType="text" id="commonCodeId" name="공통코드" />
+
+        				<w2:column dataType="text" id="commonCodeNm" name="공통코드명" />
+
+        				<w2:column dataType="text" id="useYn" name="사용여부" />
+
+
+        			</w2:columnInfo>
+
+        			<w2:data use="true">
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        				<w2:row />
+
+        			</w2:data>
+
+        		</w2:dataList>
+
+        		<w2:dataList baseNode="list" repeatNode="map" id="useYnList" saveRemovedData="true">
+        			<w2:columnInfo>
+        				<w2:column id="code" name="코드" dataType="text"></w2:column>
+        				<w2:column id="codeNm" name="코드명" dataType="text"></w2:column>
+        			</w2:columnInfo>
+        		</w2:dataList>
+        		<w2:dataList baseNode="list" repeatNode="map" id="codeDetailList" saveRemovedData="true">
+        			<w2:columnInfo>
+        				<w2:column id="chk" name="선택" dataType="text"></w2:column>
+        				<w2:column id="code" name="코드" dataType="text"></w2:column>
+        				<w2:column id="codeNm" name="코드명" dataType="text"></w2:column>
+        				<w2:column id="useYn" name="사용여부" dataType="text"></w2:column>
+        				<w2:column id="codeSort" name="순번" dataType="text"></w2:column>
+        				<w2:column id="attr1" name="변환코드01" dataType="text"></w2:column>
+        				<w2:column id="attr2" name="변환코드02" dataType="text"></w2:column>
+        				<w2:column id="attr3" name="변환코드03" dataType="text"></w2:column>
+        				<w2:column id="attr4" name="변환코드04" dataType="text"></w2:column>
+        				<w2:column id="attr5" name="변환코드05" dataType="text"></w2:column>
+        				<w2:column id="codeDesc" name="비고" dataType="text"></w2:column>
+
+        			</w2:columnInfo>
+        		</w2:dataList>
+        		<w2:dataMap baseNode="map" id="commonCodeMap">
+        			<w2:keyInfo>
+        				<w2:key id="commonCodeId" name="공통코드아이디" dataType="text"></w2:key>
+        			</w2:keyInfo>
+        		</w2:dataMap>
+        		<w2:dataMap baseNode="map" id="searchMap">
+        			<w2:keyInfo>
+        				<w2:key id="searchCondition" name="조회조건" dataType="text"></w2:key>
+        				<w2:key id="searchKeyword" name="검색어" dataType="text"></w2:key>
+
+        			</w2:keyInfo>
+        		</w2:dataMap>
+        		<w2:dataMap baseNode="map" id="pagination">
+        			<w2:keyInfo>
+        				<w2:key id="page" name="페이지넘버" dataType="text"></w2:key>
+        				<w2:key id="size" name="페이지사이즈" dataType="text"></w2:key>
+
+        				<w2:key id="sort" name="정렬순서" dataType="text"></w2:key>
+        			</w2:keyInfo>
+        		</w2:dataMap>
+        	</w2:dataCollection>
+
+        	<w2:workflowCollection></w2:workflowCollection>
+
+        	<xf:submission id="sbmCommonCodeList" ref='data:json,["searchMap","pagination"]' target="data:json,commonCodeList"
+        		action="/sample/commonCode/commonCodeList" method="post" mediatype="application/json" encoding="UTF-8" instance="" replace=""
+        		errorHandler="" customHandler="" mode="asynchronous" processMsg="" ev:submit=""
+        		ev:submitdone="scwin.sbmCommonCodeList_submitdone" ev:submiterror="" abortTrigger="">
+        	</xf:submission>
+        	<xf:submission id="sbmUseYnList" ref="" target="data:json,useYnList" action="/sample/useYnList" method="post"
+        		mediatype="application/json" encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous"
+        		processMsg="" ev:submit="" ev:submitdone="" ev:submiterror="" abortTrigger="">
+        	</xf:submission>
+        	<xf:submission id="sbmCodeDetailList" ref="data:json,commonCodeMap" target="data:json,codeDetailList"
+        		action="/sample/commonCode/selectCodeDetailList" method="post" mediatype="application/json" encoding="UTF-8" instance=""
+        		replace="" errorHandler="" customHandler="" mode="asynchronous" processMsg="" ev:submit="" ev:submitdone="scwin.sbmCodeDetailList_submitdone" ev:submiterror=""
+        		abortTrigger="">
+        	</xf:submission>
+        	<xf:submission id="sbmSaveCommonCodeDetail"
+        		ref='data:json,[{"action":"modified","id":"commonCodeList"},{"action":"modified","id":"codeDetailList"},"commonCodeMap"]' target=""
+        		action="/sample/commonCode/saveCommonCodeDetailList" method="post" mediatype="application/json" encoding="UTF-8" instance=""
+        		replace="" errorHandler="" customHandler="" mode="asynchronous" processMsg="저장중 입니다." ev:submit="" ev:submitdone="scwin.sbmSaveCommonCodeDetail_submitdone"
+        		ev:submiterror="" abortTrigger="">
+        	</xf:submission>
+        </xf:model>
+
+        <w2:layoutInfo>
+       </w2:layoutInfo>
+               
+        <w2:publicInfo method=""/>
+               
+        <script lazy="false" type="text/javascript"><![CDATA[
+/**
+ * 화면 내 전역 변수 선언
+ */
+scwin.pageItemCnt = 10;
+
+scwin.onpageload = function() {
+	com.sbm.execute(sbmUseYnList);
+	scwin.getInitData();
+	com.win.setEnterKeyEvent(tblSearch, scwin.btnSearch_onclick);
+	$(".btn_fav").click(function(){
+		$(".btn_fav").toggleClass("on");
+	});
+};
+
+scwin.getInitData = function () {
+	scwin.btnSearch_onclick();
+};
+
+/**
+ * 화면 초기화 데이터가 모두 로딩되면 발생하는 이벤트
+ */
+scwin.ondataload = function () {
+	scwin.btnSearch_onclick();
+};
+
+scwin.btnSearch_onclick = function (idx) {
+	if (idx) {
+		pagination.set("page", idx);
+	} else {
+		pagination.set("page", 1);
+	}
+	pagination.set("size", scwin.pageItemCnt);
+	com.sbm.executeDynamic(sbmCommonCodeList);
+};
+
+scwin.sbmCommonCodeList_submitdone = function(e) {
+	var totalCnt = com.num.ceil(e.responseJSON.totalCnt / scwin.pageItemCnt);
+	pglCommonCode.setCount(totalCnt);
+
+	gridCommonCodeList.setFocusedCell(0, "commonCodeId");
+	scwin.gridCommonCodeList_oncellclick(0);
+};
+
+scwin.gridCommonCodeList_oncellclick = function(row, col, colId) {
+	if (col == 0) {
+		var rowStatus = commonCodeList.getRowStatus(row);
+		if (rowStatus == "C") {
+			commonCodeList.removeRow(row);
+		} else {
+			var chk_val = commonCodeList.getCellData(row, col);
+			if (chk_val == "1") {
+				commonCodeList.modifyRowStatus(row, "D");
+			} else {
+				commonCodeList.undoRow(row);
+			}
+		}
+	} else {
+		var commonCodeId = gridCommonCodeList.getCellData(row, "commonCodeId");
+		commonCodeMap.set("commonCodeId", commonCodeId);
+		com.sbm.execute(sbmCodeDetailList);
+	}
+};
+
+scwin.sbmCodeDetailList_submitdone = function(e) {
+	gridCodeDetailList.setColumnReadOnly("code", true);
+};
+
+/**
+ * 공통코드관리 등록 버튼 클릭한다.
+ */
+scwin.btnAddCommonCode_onclick = function () {
+	var idx = com.data.insertRow(gridCommonCodeList);
+	gridCommonCodeList.setFocusedCell(idx, "commonCodeId", true);
+	idxCommonCodeId.setReadOnly(false);
+	idxCommonCodeId.focus();
+	codeDetailList.removeAll();
+};
+
+/**
+ * 공통코드관리 저장 버튼 클릭한다.
+ */
+scwin.btnSaveCommonCode_onclick = function () {
+	if (com.data.isModified(commonCodeList)) {
+		var valCommonCodeInfo = [
+			{ id: "commonCodeId", mandatory: true },
+			{ id: "commonCodeNm", mandatory: true },
+			{ id: "useYn", mandatory: true }
+		];
+		if (com.data.validateGridView(gridCommonCodeList, valCommonCodeInfo)) {
+			if (com.data.isModified(codeDetailList)) {
+				var valCodeDetailInfo = [
+					{ id: "code", mandatory: true },
+					{ id: "codeNm", mandatory: true },
+					{ id: "useYn", mandatory: true },
+					{ id: "codeSort", mandatory: true }
+				];
+				if (com.data.validateGridView(gridCodeDetailList, valCodeDetailInfo)) {
+					com.win.confirm('데이터를 저장 하시겠습니까?', function (res) {
+						if (res.clickValue === true) {
+							commonCodeMap.set("commonCodeId", idxCommonCodeId.getValue());
+							com.sbm.execute(sbmSaveCommonCodeDetail);
+						}
+					});
+				}
+			} else {
+				com.win.confirm('데이터를 저장 하시겠습니까?', function (res) {
+					if (res.clickValue === true) {
+						commonCodeMap.set("commonCodeId", idxCommonCodeId.getValue());
+						com.sbm.execute(sbmSaveCommonCodeDetail);
+					}
+				});
+			}
+		}
+	} else if (com.data.isModified(codeDetailList)) {
+		var valCodeDetailInfo = [
+			{ id: "code", mandatory: true },
+			{ id: "codeNm", mandatory: true },
+			{ id: "useYn", mandatory: true },
+			{ id: "codeSort", mandatory: true }
+		];
+		if (com.data.validateGridView(gridCodeDetailList, valCodeDetailInfo)) {
+			com.win.confirm('데이터를 저장 하시겠습니까?', function (res) {
+				if (res.clickValue === true) {
+					commonCodeMap.set("commonCodeId", idxCommonCodeId.getValue());
+					com.sbm.execute(sbmSaveCommonCodeDetail);
+				}
+			});
+		}
+	} else {
+		com.win.alert('저장할 데이터가 없습니다.');
+	}
+};
+
+scwin.sbmSaveCommonCodeDetail_submitdone = function(e) {
+	idxCommonCodeId.setReadOnly(true);
+	scwin.btnSearch_onclick();
+};
+
+scwin.btnAddCodeDetail_onclick = function () {
+	var idx = com.data.insertRow(gridCodeDetailList);
+	// gridCodeDetailList.setFocusedCell(idx, "code", true);
+	gridCodeDetailList.setColumnReadOnly("code", false);
+};
+
+scwin.gridCodeDetailList_oncellclick = function (row, col) {
+	if (col == 0) {
+		var rowStatus = codeDetailList.getRowStatus(row);
+		if (rowStatus == "C") {
+			codeDetailList.removeRow(row);
+		} else {
+			var chk_val = codeDetailList.getCellData(row, col);
+			if (chk_val == "1") {
+				codeDetailList.modifyRowStatus(row, "D");
+			} else {
+				codeDetailList.undoRow(row);
+			}
+		}
+	}
+};
+
+/**
+ * 페이지 변경 시 이벤트
+ */
+scwin.pglCommonCode_onviewchange = function (info) {
+	console.log(info.newSelectedIndex);
+    scwin.btnSearch_onclick(info.newSelectedIndex);
+};
+]]></script>
+           
+    </head>
+       
+    <body ev:onpageload="scwin.onpageload">
+           	
+        <xf:group class="sub_contents " id="" style="">
+               		
+            <xf:group class="pgtbox" id="" style="">
+                   			
+                <xf:trigger class="btn_fav" id="" style="" type="button">
+                       				
+                    <xf:label/>
+                       			
+                </xf:trigger>
+                   			
+                <w2:textbox class="pgt_tit" id="" label="공통코드관리" style="" tagname=""/>
+                   			
+                <xf:group class="breadcrumb" id="" style="">
+                       				
+                    <xf:group id="" style="" tagname="ul">
+                           					
+                        <xf:group class="home" id="" style="" tagname="li">
+                               						
+                            <w2:anchor id="" outerDiv="false" style="">
+                                   							
+                                <xf:label><![CDATA[Home]]></xf:label>
+                                   						
+                            </w2:anchor>
+                               					
+                        </xf:group>
+                           					
+                        <xf:group id="" style="" tagname="li">
+                               						
+                            <w2:anchor id="" outerDiv="false" style="">
+                                   							
+                                <xf:label><![CDATA[1Depth Menu]]></xf:label>
+                                   						
+                            </w2:anchor>
+                               					
+                        </xf:group>
+                           					
+                        <xf:group id="" style="" tagname="li">
+                               						
+                            <w2:anchor id="" outerDiv="false" style="">
+                                   							
+                                <xf:label><![CDATA[2Depth Menu]]></xf:label>
+                                   						
+                            </w2:anchor>
+                               					
+                        </xf:group>
+                           					
+                        <xf:group id="" style="" tagname="li">
+                               						
+                            <w2:span id="" label="3Depth Menu" style=""/>
+                               					
+                        </xf:group>
+                           				
+                    </xf:group>
+                       			
+                </xf:group>
+                   		
+            </xf:group>
+               		
+            <xf:group class="schbox" id="" style="">
+                   			
+                <xf:group class="schbox_inner" id="tblSearch" style="">
+                       				
+                    <xf:group class="w2tb tbl " id="" style="" tagname="table">
+                           					
+                        <w2:attributes>
+                               						
+                            <w2:summary/>
+                               					
+                        </w2:attributes>
+                           					
+                        <xf:group tagname="colgroup">
+                               						
+                            <xf:group style="width:100px;" tagname="col"/>
+                               						
+                            <xf:group style="width:100%;" tagname="col"/>
+                               						
+                            <xf:group style="width:100px;" tagname="col"/>
+                               						
+                            <xf:group style="" tagname="col"/>
+                               					
+                        </xf:group>
+                           					
+                        <xf:group class="" id="" style="" tagname="tr">
+                               						
+                            <xf:group class="w2tb_th" style="" tagname="th">
+                                   							
+                                <w2:textbox class="" id="" label="조회조건" style=""/>
+                                   						
+                            </xf:group>
+                               						
+                            <xf:group class="w2tb_td" style="" tagname="td">
+                            	<xf:select1 allOption="true" appearance="minimal" chooseOption="" class="" direction="auto" disabled="false"
+                            		disabledClass="w2selectbox_disabled" id="" ref="data:searchMap.searchCondition" renderType="" style="width:100px;" submenuSize="auto">
+
+                            		<xf:choices>
+                            			<xf:item>
+                            				<xf:label><![CDATA[공통코드]]></xf:label>
+                            				<xf:value><![CDATA[commonCodeId]]></xf:value>
+                            			</xf:item>
+                            			<xf:item>
+                            				<xf:label><![CDATA[공통코드명]]></xf:label>
+                            				<xf:value><![CDATA[commonCodeNm]]></xf:value>
+                            			</xf:item>
+                            		</xf:choices>
+
+                            	</xf:select1>
+                            	<xf:input id="" style="width: 250px;height: 25px;" ref="data:searchMap.searchKeyword"></xf:input>
+                            </xf:group>
+
+                        </xf:group>
+                           				
+                    </xf:group>
+                       			
+                </xf:group>
+                   			
+                <xf:group class="btn_schbox" id="" style="">
+                       				
+                    <xf:trigger class="btn_cm sch" disabled="" escape="false" id="" style="" type="button" ev:onclick="scwin.btnSearch_onclick">
+                           					
+                        <xf:label><![CDATA[조회]]></xf:label>
+                           				
+                    </xf:trigger>
+                       			
+                </xf:group>
+                   		
+            </xf:group>
+               		
+            <xf:group class="lybox" id="">
+                   			
+                <xf:group class="ly_column col_3" id="" style="width: 450px;">
+                       				
+                    <xf:group adaptiveThreshold="" class="gvwbox" id="" style="">
+
+                    	<xf:group class="titbox" id="" style="">
+                    		<w2:textbox class="" id="" label="공통코드" style="" tagname="h3"></w2:textbox>
+                    		<xf:group class="rt" id="" style=""></xf:group>
+                    	</xf:group>
+                    	<w2:gridView autoFit="allColumn" checkReadOnlyOnPasteEnable="" class="gvw" dataList="data:commonCodeList"
+                    		defaultCellHeight="26" focusMode="row" id="gridCommonCodeList" keepDefaultColumnWidth="true" rowNumHeaderValue="No"
+                    		rowNumVisible="true" rowNumWidth="50" rowStatusHeaderValue="상태" rowStatusVisible="true" rowStatusWidth="50"
+                    		scrollByColumn="false" scrollByColumnAdaptive="false" style="height:502px;"
+                    		ev:oncellclick="scwin.gridCommonCodeList_oncellclick">
+
+                    		<w2:caption id="caption1" style="" value="this is a grid caption." />
+
+                    		<w2:header id="header1" style="">
+
+                    			<w2:row id="row1" style="">
+                    				<w2:column width="30" inputType="checkbox" id="chk" displayMode="label"></w2:column>
+                    				<w2:column width="150" inputType="text" id="column2" value="공통코드" displayMode="label" class="req"></w2:column>
+                    				<w2:column width="170" inputType="text" id="column3" value="공통코드명" displayMode="label" class="req"></w2:column>
+                    				<w2:column width="80" inputType="text" id="column5" value="사용여부" displayMode="label" class="req"></w2:column>
+                    			</w2:row>
+
+                    		</w2:header>
+
+                    		<w2:gBody id="gBody1" style="">
+
+                    			<w2:row id="row2" style="">
+                    				<w2:column width="30" inputType="checkbox" id="chk" displayMode="label" readOnly="false"></w2:column>
+                    				<w2:column width="150" inputType="text" id="commonCodeId" displayMode="label" readOnly="true"
+                    					maxLength="30">
+                    				</w2:column>
+                    				<w2:column width="170" inputType="text" id="commonCodeNm" displayMode="label" readOnly="true"
+                    					maxLength="300">
+                    				</w2:column>
+                    				<w2:column width="80" inputType="select" id="useYn" displayMode="label" readOnly="true">
+                    					<w2:choices>
+                    						<w2:itemset nodeset="data:useYnList">
+                    							<w2:label ref="codeNm"></w2:label>
+                    							<w2:value ref="code"></w2:value>
+                    						</w2:itemset>
+                    					</w2:choices>
+                    				</w2:column>
+                    			</w2:row>
+
+                    		</w2:gBody>
+
+                    	</w2:gridView>
+                    	<w2:pageList pageSize="5" displayButtonType="display" id="pglCommonCode" displayFormat="#" style="width:531px;height: 44px;" class="wq_pglist" pagingType="0" ev:onviewchange="scwin.pglCommonCode_onviewchange"></w2:pageList>
+
+                    </xf:group>
+
+                </xf:group>
+                   			
+                <xf:group class="ly_column col_7" id="" style="width: 517px;">
+
+                	<xf:group class="titbox" id="" style="">
+               			<w2:textbox class="" id="" label="등록/수정" style="" tagname="h3"></w2:textbox>
+               			<xf:group class="rt" id="" style="">
+               				<xf:trigger class="btn_cm" id="btnAddCommonCode" style="" type="button"
+               					ev:onclick="scwin.btnAddCommonCode_onclick">
+               					<xf:label><![CDATA[신규]]></xf:label>
+               				</xf:trigger>
+               				<xf:trigger type="button" id="btnSaveCommonCode" style="width:42px;height:26px;" ev:onclick="scwin.btnSaveCommonCode_onclick">
+               					<xf:label><![CDATA[저장]]></xf:label>
+               				</xf:trigger>
+               			</xf:group>
+                	</xf:group>
+
+                	<xf:group class="tblbox" id="" style="">
+
+                		<xf:group class="w2tb tbl" id="tableCommonCodeDetail" style="" tagname="table">
+
+                			<w2:attributes>
+
+                				<w2:summary />
+
+                			</w2:attributes>
+
+                			<xf:group tagname="colgroup">
+
+                				<xf:group style="width:100px;" tagname="col" />
+
+                				<xf:group style="" tagname="col" />
+
+                			</xf:group>
+
+                			<xf:group style="" tagname="tr">
+
+                				<xf:group class="w2tb_th" style="" tagname="th">
+
+                					<w2:textbox class="" id="" label="공통코드" ref="" style="" userData2="" />
+
+                				</xf:group>
+
+                				<xf:group class="w2tb_td" style="" tagname="td">
+
+                					<xf:group class="flex" id="" style="">
+
+                						<xf:input class="" id="idxCommonCodeId" placeholder="" style="width:100%;"
+                							ref="data:commonCodeList.commonCodeId" readOnly="true" refSync="false" mandatory="true" maxlength="30"/>
+
+                					</xf:group>
+
+                				</xf:group>
+
+                			</xf:group>
+
+                			<xf:group tagname="tr">
+
+                				<xf:group class="w2tb_th " tagname="th">
+
+                					<w2:attributes>
+
+                						<w2:scope>row</w2:scope>
+
+                					</w2:attributes>
+
+                					<w2:textbox class="" id="" label="공통코드명" ref="" style="" userData2="" />
+
+                				</xf:group>
+
+                				<xf:group class="w2tb_td" tagname="td">
+
+                					<w2:attributes />
+
+                					<xf:input class="" id="idxCommonCodeNm" placeholder="" ref="data:commonCodeList.commonCodeNm"
+                						style="width:100%;" mandatory="true" maxlength="30">
+                					</xf:input>
+                				</xf:group>
+
+                			</xf:group>
+
+                			<xf:group tagname="tr">
+
+                				<xf:group class="w2tb_th " tagname="th">
+
+                					<w2:attributes>
+
+                						<w2:scope>row</w2:scope>
+
+                					</w2:attributes>
+
+                					<w2:textbox class="" id="" label="사용여부" ref="" style="" userData2="" />
+
+                				</xf:group>
+
+                				<xf:group class="w2tb_td" tagname="td">
+                					<xf:select1 id="" chooseOption="" style="width: 148px;height: 26px;" submenuSize="auto" allOption=""
+                						disabled="false" direction="auto" appearance="minimal" disabledClass="w2selectbox_disabled"
+                						ref="data:commonCodeList.useYn" mandatory="true">
+                						<xf:choices>
+                							<xf:itemset nodeset="data:useYnList">
+                								<xf:label ref="codeNm"></xf:label>
+                								<xf:value ref="code"></xf:value>
+                							</xf:itemset>
+                						</xf:choices>
+                					</xf:select1>
+
+                					<w2:attributes />
+
+                				</xf:group>
+
+                			</xf:group>
+                		</xf:group>
+
+                	</xf:group>
+
+                	<xf:group class="titbox" id="" style="">
+
+                		<w2:textbox class="" id="" label="코드상세" style="" tagname="h3" />
+
+                		<xf:group class="rt" id="" style="">
+
+                			<xf:trigger class="btn_cm  row_add" id="btnAddCodeDetail" style="" type="button" ev:onclick="scwin.btnAddCodeDetail_onclick">
+                				<xf:label><![CDATA[추가]]></xf:label>
+                			</xf:trigger>
+                		</xf:group>
+
+                	</xf:group>
+                	<w2:gridView checkAllType="false" defaultCellHeight="26" id="gridCodeDetailList" style="height:390px;"
+                		dataList="data:codeDetailList" rowNumVisible="true" rowNumHeaderValue="No" fixedColumn="2" focusMode="row"
+                		rowStatusVisible="true" ev:oncellclick="scwin.gridCodeDetailList_oncellclick" rowStatusHeaderValue="상태" class="gvw">
+                		<w2:caption style="" id="caption1" value="this is a grid caption."></w2:caption>
+                		<w2:header style="" id="header1">
+                			<w2:row style="" id="row1">
+                				<w2:column width="50" inputType="checkbox" id="chk" displayMode="label"></w2:column>
+                				<w2:column width="100" inputType="text" id="column21" value="코드" displayMode="label" class="req"></w2:column>
+                				<w2:column width="200" inputType="text" id="column22" value="코드명" displayMode="label" class="req"></w2:column>
+                				<w2:column width="90" inputType="text" id="column23" value="사용여부" displayMode="label" class="req"></w2:column>
+                				<w2:column width="70" inputType="text" id="column24" value="순번" displayMode="label" class="req"></w2:column>
+                				<w2:column width="100" inputType="text" id="column25" value="변환코드01" displayMode="label"></w2:column>
+                				<w2:column width="100" inputType="text" id="column26" value="변환코드02" displayMode="label"></w2:column>
+                				<w2:column width="100" inputType="text" id="column27" value="변환코드03" displayMode="label"></w2:column>
+                				<w2:column width="100" inputType="text" id="column28" value="변환코드04" displayMode="label"></w2:column>
+                				<w2:column width="100" inputType="text" id="column29" value="변환코드05" displayMode="label"></w2:column>
+                				<w2:column width="100" inputType="text" id="column30" value="비고" displayMode="label"></w2:column>
+                			</w2:row>
+                		</w2:header>
+                		<w2:gBody style="" id="gBody1">
+                			<w2:row style="" id="row2">
+                				<w2:column width="50" inputType="checkbox" id="chk" displayMode="label" readOnly="false"></w2:column>
+                				<w2:column width="100" inputType="text" id="code" displayMode="label" readOnly="true" maxLength="30"></w2:column>
+                				<w2:column width="200" inputType="text" id="codeNm" displayMode="label" maxLength="300"></w2:column>
+                				<w2:column width="90" inputType="select" id="useYn" displayMode="label">
+                					<w2:choices>
+                						<w2:itemset nodeset="data:useYnList">
+                							<w2:label ref="codeNm"></w2:label>
+                							<w2:value ref="code"></w2:value>
+                						</w2:itemset>
+                					</w2:choices>
+                				</w2:column>
+                				<w2:column width="70" inputType="text" id="codeSort" displayMode="label" maxLength="1"></w2:column>
+                				<w2:column width="100" inputType="text" id="attr1" displayMode="label" maxLength="300"></w2:column>
+                				<w2:column width="100" inputType="text" id="attr2" displayMode="label" maxLength="300"></w2:column>
+                				<w2:column width="100" inputType="text" id="attr3" displayMode="label" maxLength="300"></w2:column>
+                				<w2:column width="100" inputType="text" id="attr4" displayMode="label" maxLength="300"></w2:column>
+                				<w2:column width="100" inputType="text" id="attr5" displayMode="label" maxLength="300"></w2:column>
+                				<w2:column width="100" inputType="text" id="codeDesc" displayMode="label" maxLength="1000"></w2:column>
+                			</w2:row>
+                		</w2:gBody>
+                	</w2:gridView>
+
+                	<xf:group class="tblbox" id="" style="">
+
+                	</xf:group>
+
+                </xf:group>
+
+            </xf:group>
+               	
+        </xf:group>
+           
+    </body>
+    
+</html>

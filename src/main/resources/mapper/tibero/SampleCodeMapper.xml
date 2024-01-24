@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nhc.erp.sample.mapper.SampleCodeMapper">
+    <select id="selectCommonCodeList" parameterType="nhc.erp.sample.vo.SampleCodeVo" resultType="nhc.erp.common.vo.CommonHashMap">
+    	/* SampleCodeMapper.selectCommonCodeList */
+		SELECT COMMON_CODE_ID
+			 , COMMON_CODE_NM
+			 , CODE_DESC
+			 , USE_YN
+			 , CRE_USER
+			 , CRE_DATE
+		  FROM TB_COMMON_CODE
+	<where>
+		<if test='searchKeyword != null and searchKeyword != ""'>
+			<if test='searchCondition == "all"'>
+			   AND (COMMON_CODE_ID LIKE '%' || #{searchKeyword} || '%'
+			    OR COMMON_CODE_NM LIKE '%' || #{searchKeyword} || '%')
+			</if>
+			<if test='searchCondition == "commonCodeId"'>
+			   AND COMMON_CODE_ID LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchCondition == "commonCodeNm"'>
+			   AND COMMON_CODE_NM LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
+	</where>
+	  ORDER BY COMMON_CODE_ID ASC
+    </select>
+    <select id="selectCodeDetailList" parameterType="nhc.erp.sample.vo.SampleCodeVo" resultType="nhc.erp.common.vo.CommonHashMap">
+    	/* SampleCodeMapper.selectCodeDetailList */
+			SELECT COMMON_CODE_ID
+				 , CODE
+				 , CODE_NM
+				 , CODE_DESC
+				 , CODE_SORT
+				 , ATTR1
+				 , ATTR2
+				 , ATTR3
+				 , ATTR4
+				 , ATTR5
+				 , USE_YN
+			  FROM TB_CODE_DETAIL
+			 WHERE COMMON_CODE_ID = #{commonCodeId}
+		  ORDER BY CODE_SORT ASC
+    </select>
+    <insert id="insertCommonCodeData" parameterType="nhc.erp.sample.vo.SampleCodeVo">
+		/* SampleCodeMapper.insertCommonCodeData */
+		INSERT
+		  INTO TB_COMMON_CODE
+		     (
+			   COMMON_CODE_ID
+			 , COMMON_CODE_NM
+			 , USE_YN
+			 , CRE_USER
+			 , CRE_DATE
+			 , MOD_USER
+			 , MOD_DATE
+			 )
+		VALUES
+			 (
+			   #{commonCodeId}
+			 , #{commonCodeNm}
+			 , #{useYn}
+			 , 'nhcadmin'
+			 , SYSTIMESTAMP
+			 , 'nhcadmin'
+			 , SYSTIMESTAMP
+			 )
+	</insert>
+	<update id="updateCommonCodeData" parameterType="nhc.erp.sample.vo.SampleCodeVo">
+		/* SampleCodeMapper.updateCommonCodeData */
+		UPDATE TB_COMMON_CODE
+		   SET COMMON_CODE_NM = #{commonCodeNm}
+			 , USE_YN = #{useYn}
+			 , MOD_USER = 'nhcadmin'
+			 , MOD_DATE = SYSTIMESTAMP
+		 WHERE COMMON_CODE_ID = #{commonCodeId}
+	</update>
+	<delete id="deleteCommonCodeData" parameterType="nhc.erp.sample.vo.SampleCodeVo">
+		/* SampleCodeMapper.deleteCommonCodeData */
+		DELETE FROM TB_COMMON_CODE
+		 WHERE COMMON_CODE_ID = #{commonCodeId}
+	</delete>
+	<delete id="deleteCodeDetailList" parameterType="nhc.erp.sample.vo.SampleCodeVo">
+		/* SampleCodeMapper.deleteCodeDetailList */
+		DELETE FROM TB_CODE_DETAIL
+		 WHERE COMMON_CODE_ID = #{commonCodeId}
+	</delete>
+	<insert id="insertCodeDetailData" parameterType="nhc.erp.sample.vo.SampleCodeVo">
+		/* SampleCodeMapper.insertCodeDetailData */
+		INSERT
+		  INTO TB_CODE_DETAIL
+		     (
+		       COMMON_CODE_ID
+			 , CODE
+			 , CODE_NM
+			 , CODE_SORT
+			 , USE_YN
+			 , ATTR1
+			 , ATTR2
+			 , ATTR3
+			 , ATTR4
+			 , ATTR5
+			 , CODE_DESC
+		     , CRE_USER
+			 , CRE_DATE
+			 , MOD_USER
+			 , MOD_DATE
+			 )
+		VALUES
+			 (
+			   #{commonCodeId}
+			 , #{code}
+			 , #{codeNm}
+			 , #{codeSort}
+			 , #{useYn}
+			 , #{attr1}
+			 , #{attr2}
+			 , #{attr3}
+			 , #{attr4}
+			 , #{attr5}
+			 , #{codeDesc}
+			 , 'nhcadmin'
+			 , SYSTIMESTAMP
+			 , 'nhcadmin'
+			 , SYSTIMESTAMP
+			 )
+	</insert>
+	<update id="updateCodeDetailData" parameterType="nhc.erp.sample.vo.SampleCodeVo">
+		/* SampleCodeMapper.updateCodeDetailData */
+		UPDATE TB_CODE_DETAIL
+		   SET CODE_NM = #{codeNm}
+			 , CODE_SORT = #{codeSort}
+			 , USE_YN = #{useYn}
+			 , ATTR1 = #{attr1}
+			 , ATTR2 = #{attr2}
+			 , ATTR3 = #{attr3}
+			 , ATTR4 = #{attr4}
+			 , ATTR5 = #{attr5}
+			 , CODE_DESC = #{codeDesc}
+		     , MOD_USER = 'nhcadmin'
+			 , MOD_DATE = SYSTIMESTAMP
+		 WHERE COMMON_CODE_ID = #{commonCodeId}
+		   AND CODE = #{code}
+	</update>
+	<delete id="deleteCodeDetailData" parameterType="nhc.erp.sample.vo.SampleCodeVo">
+		/* SampleCodeMapper.deleteCodeDetailData */
+		DELETE FROM TB_CODE_DETAIL
+		 WHERE COMMON_CODE_ID = #{commonCodeId}
+		   AND CODE = #{code}
+	</delete>
+</mapper>

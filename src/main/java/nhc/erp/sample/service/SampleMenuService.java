@@ -11,23 +11,20 @@ import nhc.erp.sample.vo.SampleMenuVo;
 import prunus.datasource.annotation.DataSourceName;
 
 @Service
-@DataSourceName("wrm")
+@DataSourceName("nhcerp")
 public class SampleMenuService {
 	@Autowired
 	private SampleMenuMapper mapper;
 
 	public List<Map<String, Object>> selectMenuList(SampleMenuVo sampleMenuVo) {
-		// DataSourceNameContextHolder.set("tibero");
-        return mapper.selectMenuList(sampleMenuVo);
+		return mapper.selectMenuList(sampleMenuVo);
     }
 	
 	public List<Map<String, Object>> selectFavoriteListByEmpCd(SampleMenuVo sampleMenuVo) {
-		// DataSourceNameContextHolder.set("tibero");
-        return mapper.selectFavoriteListByEmpCd(sampleMenuVo);
+		return mapper.selectFavoriteListByEmpCd(sampleMenuVo);
     }
 	
 	public List<Map<String, Object>> selectProgramAuthorityList(SampleMenuVo sampleMenuVo) {
-		// DataSourceNameContextHolder.set("tibero");
-        return mapper.selectProgramAuthorityList(sampleMenuVo);
+		return mapper.selectProgramAuthorityList(sampleMenuVo);
     }
 }
