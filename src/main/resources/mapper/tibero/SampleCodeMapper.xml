@@ -2,8 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nhc.erp.sample.mapper.SampleCodeMapper">
+	<select id="selectCommonCodeCnt" parameterType="nhc.erp.sample.vo.SampleCodeVo" resultType="int">
+    	/* SampleCodeMapper.selectCommonCodeCnt */
+		SELECT COUNT(*)
+		  FROM TB_COMMON_CODE
+	<where>
+		<if test='searchKeyword != null and searchKeyword != ""'>
+			<if test='searchCondition == "all"'>
+			   AND (COMMON_CODE_ID LIKE '%' || #{searchKeyword} || '%'
+			    OR COMMON_CODE_NM LIKE '%' || #{searchKeyword} || '%')
+			</if>
+			<if test='searchCondition == "commonCodeId"'>
+			   AND COMMON_CODE_ID LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchCondition == "commonCodeNm"'>
+			   AND COMMON_CODE_NM LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
+	</where>
+    </select>
     <select id="selectCommonCodeList" parameterType="nhc.erp.sample.vo.SampleCodeVo" resultType="nhc.erp.common.vo.CommonHashMap">
     	/* SampleCodeMapper.selectCommonCodeList */
+    	SELECT *
+    	  FROM (SELECT AA.*
+    	  			 , ROWNUM AS PAGE_R_NUM
+    	  		  FROM (SELECT COMMON_CODE_ID
+							 , COMMON_CODE_NM
+							 , CODE_DESC
+							 , USE_YN
+							 , CRE_USER
+							 , CRE_DATE
+						  FROM TB_COMMON_CODE
+					<where>
+						<if test='searchKeyword != null and searchKeyword != ""'>
+							<if test='searchCondition == "all"'>
+							   AND (COMMON_CODE_ID LIKE '%' || #{searchKeyword} || '%'
+							    OR COMMON_CODE_NM LIKE '%' || #{searchKeyword} || '%')
+							</if>
+							<if test='searchCondition == "commonCodeId"'>
+							   AND COMMON_CODE_ID LIKE '%' || #{searchKeyword} || '%'
+							</if>
+							<if test='searchCondition == "commonCodeNm"'>
+							   AND COMMON_CODE_NM LIKE '%' || #{searchKeyword} || '%'
+							</if>
+						</if>
+					</where>
+					  ORDER BY COMMON_CODE_ID ASC
+					   ) AA
+				 WHERE ROWNUM <![CDATA[<=]]> #{lastRecordIndex}
+			   )
+		 WHERE PAGE_R_NUM <![CDATA[>]]> #{firstRecordIndex}
+    </select>
+    <select id="selectCommonCodeList1" parameterType="nhc.erp.sample.vo.SampleCodeVo" resultType="nhc.erp.common.vo.CommonHashMap">
+    	/* SampleCodeMapper.selectCommonCodeList1 */
 		SELECT COMMON_CODE_ID
 			 , COMMON_CODE_NM
 			 , CODE_DESC
@@ -25,6 +76,17 @@
 			</if>
 		</if>
 	</where>
+	  ORDER BY COMMON_CODE_ID ASC
+    </select>
+    <select id="selectSampleCommonCodeList" resultType="nhc.erp.common.vo.CommonHashMap">
+    	/* SampleCodeMapper.selectSampleCommonCodeList */
+		SELECT COMMON_CODE_ID
+			 , COMMON_CODE_NM
+			 , CODE_DESC
+			 , USE_YN
+			 , CRE_USER
+			 , CRE_DATE
+		  FROM TB_COMMON_CODE
 	  ORDER BY COMMON_CODE_ID ASC
     </select>
     <select id="selectCodeDetailList" parameterType="nhc.erp.sample.vo.SampleCodeVo" resultType="nhc.erp.common.vo.CommonHashMap">

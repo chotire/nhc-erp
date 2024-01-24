@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import nhc.erp.common.Constants;
 import nhc.erp.common.util.StringUtil;
@@ -21,14 +22,27 @@ public class SampleCodeService {
 	@Autowired
 	private SampleCodeMapper mapper;
 
-	public Page<Map<String, Object>> selectCommonCodeList(SampleCodeVo sampleCodeVo, Pageable pageable) {
-		return new Paging<>(mapper.selectCommonCodeList(sampleCodeVo, pageable));
+	public int selectCommonCodeCnt(SampleCodeVo sampleCodeVo) {
+		return mapper.selectCommonCodeCnt(sampleCodeVo);
+    }
+	
+	public List<Map<String, Object>> selectCommonCodeList(SampleCodeVo sampleCodeVo) {
+		return mapper.selectCommonCodeList(sampleCodeVo);
+    }
+	
+	public Page<Map<String, Object>> selectCommonCodeList1(SampleCodeVo sampleCodeVo, Pageable pageable) {
+		return new Paging<>(mapper.selectCommonCodeList1(sampleCodeVo, pageable));
+    }
+	
+	public List<Map<String, Object>> selectSampleCommonCodeList() {
+		return mapper.selectSampleCommonCodeList();
     }
 	
 	public List<Map<String, Object>> selectCodeDetailList(String commonCodeId) {
 		return mapper.selectCodeDetailList(commonCodeId);
     }
 	
+	@Transactional
 	public void saveCommonCodeDetailList(SampleCodeVo sampleCodeVo) throws Exception {
 		if (sampleCodeVo.getCommonCodeList().size() > 0) {
 			for (int i = 0; i < sampleCodeVo.getCommonCodeList().size(); i++) {

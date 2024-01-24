@@ -144,25 +144,29 @@ scwin.pageItemCnt = 10;
 scwin.onpageload = function() {
 	com.sbm.execute(sbmUseYnList);
 	scwin.getInitData();
-	com.win.setEnterKeyEvent(tblSearch, scwin.btnSearch_onclick);
+	com.win.setEnterKeyEvent(tblSearch, scwin.searchCommonCodeList);
 	$(".btn_fav").click(function(){
 		$(".btn_fav").toggleClass("on");
 	});
 };
 
 scwin.getInitData = function () {
-	scwin.btnSearch_onclick();
+	scwin.searchCommonCodeList();
 };
 
 /**
  * 화면 초기화 데이터가 모두 로딩되면 발생하는 이벤트
  */
 scwin.ondataload = function () {
-	scwin.btnSearch_onclick();
+	scwin.searchCommonCodeList();
 };
 
 scwin.btnSearch_onclick = function (idx) {
-	if (idx) {
+	scwin.searchCommonCodeList(idx);
+};
+
+scwin.searchCommonCodeList = function (idx) {
+	if (typeof idx === 'number') {
 		pagination.set("page", idx);
 	} else {
 		pagination.set("page", 1);
@@ -172,11 +176,15 @@ scwin.btnSearch_onclick = function (idx) {
 };
 
 scwin.sbmCommonCodeList_submitdone = function(e) {
-	var totalCnt = com.num.ceil(e.responseJSON.totalCnt / scwin.pageItemCnt);
-	pglCommonCode.setCount(totalCnt);
+	if (com.sbm.getResultCode(e) == gcm.MESSAGE_CODE.STATUS_SUCCESS) {
+		var totalCnt = com.num.ceil(e.responseJSON.totalCnt / scwin.pageItemCnt);
+		pglCommonCode.setCount(totalCnt);
+		
+		gridCommonCodeList.setFocusedCell(0, "commonCodeId");
+		scwin.gridCommonCodeList_oncellclick(0);
 
-	gridCommonCodeList.setFocusedCell(0, "commonCodeId");
-	scwin.gridCommonCodeList_oncellclick(0);
+		pglCommonCode.setSelectedIndex(pagination.get('page'));
+	}
 };
 
 scwin.gridCommonCodeList_oncellclick = function(row, col, colId) {
@@ -204,11 +212,20 @@ scwin.sbmCodeDetailList_submitdone = function(e) {
 };
 
 /**
- * 공통코드관리 등록 버튼 클릭한다.
+ * 공통코드관리 신규 버튼 클릭한다.
  */
 scwin.btnAddCommonCode_onclick = function () {
-	var idx = com.data.insertRow(gridCommonCodeList);
-	gridCommonCodeList.setFocusedCell(idx, "commonCodeId", true);
+	var idx1 = commonCodeList.getInsertedIndex();
+	for (i = 0; i < idx1.length; i++) {
+		var rowStatus = commonCodeList.getRowStatus(idx1[i]);
+	}
+
+	if (rowStatus === 'C') {
+		return;
+	}
+
+	var idx2 = com.data.insertRow(gridCommonCodeList);
+	gridCommonCodeList.setFocusedCell(idx2, "commonCodeId", true);
 	idxCommonCodeId.setReadOnly(false);
 	idxCommonCodeId.focus();
 	codeDetailList.removeAll();
@@ -271,7 +288,7 @@ scwin.btnSaveCommonCode_onclick = function () {
 
 scwin.sbmSaveCommonCodeDetail_submitdone = function(e) {
 	idxCommonCodeId.setReadOnly(true);
-	scwin.btnSearch_onclick();
+	scwin.searchCommonCodeList();
 };
 
 scwin.btnAddCodeDetail_onclick = function () {
@@ -296,12 +313,27 @@ scwin.gridCodeDetailList_oncellclick = function (row, col) {
 	}
 };
 
+scwin.gridCommonCodeList_onrowindexchange = function(row, oldRow) {
+	var rowStatus = commonCodeList.getRowStatus(oldRow);
+
+	if (rowStatus === 'C') {
+		com.win.confirm('공통코드 편집을 삭제 하시겠습니까?', function (res) {
+			if (res.clickValue === true) {
+				commonCodeList.removeRow(oldRow);
+				idxCommonCodeId.setReadOnly(true);
+			} else {
+				gridCommonCodeList.setFocusedCell(oldRow, "commonCodeId");
+				idxCommonCodeId.setReadOnly(false);
+			}
+		});
+	}
+};
+
 /**
  * 페이지 변경 시 이벤트
  */
-scwin.pglCommonCode_onviewchange = function (info) {
-	console.log(info.newSelectedIndex);
-    scwin.btnSearch_onclick(info.newSelectedIndex);
+scwin.pglCommonCode_onviewchange = function(info) {
+	scwin.searchCommonCodeList(info.newSelectedIndex);
 };
 ]]></script>
            
@@ -446,36 +478,31 @@ scwin.pglCommonCode_onviewchange = function (info) {
                     		<w2:textbox class="" id="" label="공통코드" style="" tagname="h3"></w2:textbox>
                     		<xf:group class="rt" id="" style=""></xf:group>
                     	</xf:group>
-                    	<w2:gridView autoFit="allColumn" checkReadOnlyOnPasteEnable="" class="gvw" dataList="data:commonCodeList"
-                    		defaultCellHeight="26" focusMode="row" id="gridCommonCodeList" keepDefaultColumnWidth="true" rowNumHeaderValue="No"
-                    		rowNumVisible="true" rowNumWidth="50" rowStatusHeaderValue="상태" rowStatusVisible="true" rowStatusWidth="50"
-                    		scrollByColumn="false" scrollByColumnAdaptive="false" style="height:502px;"
-                    		ev:oncellclick="scwin.gridCommonCodeList_oncellclick">
 
-                    		<w2:caption id="caption1" style="" value="this is a grid caption." />
+                    <xf:group id=""><w2:gridView ev:oncellclick="scwin.gridCommonCodeList_oncellclick" ev:onrowindexchange="scwin.gridCommonCodeList_onrowindexchange" scrollByColumnAdaptive="false" rowNumVisible="true" rowStatusWidth="50" keepDefaultColumnWidth="true" rowNumHeaderValue="No" scrollByColumn="false" defaultCellHeight="26" rowStatusHeaderValue="상태" checkReadOnlyOnPasteEnable="" focusMode="row" rowStatusVisible="true" rowNumWidth="50" dataList="data:commonCodeList" style="height:502px;" autoFit="allColumn" id="gridCommonCodeList" visibleRowNum="10" class="gvw">
 
-                    		<w2:header id="header1" style="">
+                    		<w2:caption style="" id="caption1" value="this is a grid caption."></w2:caption>
 
-                    			<w2:row id="row1" style="">
+                    		<w2:header style="" id="header1">
+
+                    			<w2:row style="" id="row1">
                     				<w2:column width="30" inputType="checkbox" id="chk" displayMode="label"></w2:column>
-                    				<w2:column width="150" inputType="text" id="column2" value="공통코드" displayMode="label" class="req"></w2:column>
-                    				<w2:column width="170" inputType="text" id="column3" value="공통코드명" displayMode="label" class="req"></w2:column>
-                    				<w2:column width="80" inputType="text" id="column5" value="사용여부" displayMode="label" class="req"></w2:column>
+                    				<w2:column width="150" inputType="text" id="column2" value="공통코드" class="req" displayMode="label"></w2:column>
+                    				<w2:column width="170" inputType="text" id="column3" value="공통코드명" class="req" displayMode="label"></w2:column>
+                    				<w2:column width="80" inputType="text" id="column5" value="사용여부" class="req" displayMode="label"></w2:column>
                     			</w2:row>
 
                     		</w2:header>
 
-                    		<w2:gBody id="gBody1" style="">
+                    		<w2:gBody style="" id="gBody1">
 
-                    			<w2:row id="row2" style="">
-                    				<w2:column width="30" inputType="checkbox" id="chk" displayMode="label" readOnly="false"></w2:column>
-                    				<w2:column width="150" inputType="text" id="commonCodeId" displayMode="label" readOnly="true"
-                    					maxLength="30">
+                    			<w2:row style="" id="row2">
+                    				<w2:column width="30" inputType="checkbox" readOnly="false" id="chk" displayMode="label"></w2:column>
+                    				<w2:column width="150" inputType="text" readOnly="true" id="commonCodeId" displayMode="label" maxLength="30">
                     				</w2:column>
-                    				<w2:column width="170" inputType="text" id="commonCodeNm" displayMode="label" readOnly="true"
-                    					maxLength="300">
+                    				<w2:column width="170" inputType="text" readOnly="true" id="commonCodeNm" displayMode="label" maxLength="300">
                     				</w2:column>
-                    				<w2:column width="80" inputType="select" id="useYn" displayMode="label" readOnly="true">
+                    				<w2:column width="80" inputType="select" readOnly="true" id="useYn" displayMode="label">
                     					<w2:choices>
                     						<w2:itemset nodeset="data:useYnList">
                     							<w2:label ref="codeNm"></w2:label>
@@ -487,10 +514,7 @@ scwin.pglCommonCode_onviewchange = function (info) {
 
                     		</w2:gBody>
 
-                    	</w2:gridView>
-                    	<w2:pageList pageSize="5" displayButtonType="display" id="pglCommonCode" displayFormat="#" style="width:531px;height: 44px;" class="wq_pglist" pagingType="0" ev:onviewchange="scwin.pglCommonCode_onviewchange"></w2:pageList>
-
-                    </xf:group>
+                    	</w2:gridView><w2:pageList ev:onclick="scwin.pglCommonCode_onclick" ev:onviewchange="scwin.pglCommonCode_onviewchange" pageSize="5" displayButtonType="display" displayFormat="#" pagingType="0" style="width:700px;height: 44px;" id="pglCommonCode" class="wq_pglist"></w2:pageList></xf:group></xf:group>
 
                 </xf:group>
                    			

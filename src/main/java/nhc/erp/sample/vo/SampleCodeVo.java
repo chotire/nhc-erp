@@ -8,12 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import nhc.erp.common.vo.SearchVo;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class SampleCodeVo {
+public class SampleCodeVo extends SearchVo {
 	private String searchCondition;
 	private String searchKeyword;
 	

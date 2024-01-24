@@ -63,9 +63,8 @@ prunus:
         p6spy: true
         hikari:
           min-idle: 5
-          max-pool-size: 30
+          max-pool-size: 10
           idle-timeout: 30000
-          pool-name: DevLogHikariCP
           max-lifetime: 200000
           connection-timeout: 300000
           connection-test-query: SELECT 1 FROM DUAL

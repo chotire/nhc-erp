@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import nhc.erp.common.inswave.util.Result;
+import nhc.erp.common.util.StringUtil;
 import nhc.erp.sample.service.SampleCodeService;
 import nhc.erp.sample.service.SampleService;
 import nhc.erp.sample.vo.SampleCodeParam;
@@ -118,20 +119,59 @@ public class SampleController {
 	}
     
     @PostMapping(value = "/sample/commonCode/commonCodeList")
-	public Map<String, Object> getCommonCodeList(@RequestBody SampleCodeParam param) {
+    @SuppressWarnings("unchecked")
+	public Map<String, Object> getCommonCodeList(@RequestBody Map<String, Object> param) {
 		Result result = new Result();
 		
 		try {
-			@SuppressWarnings("unchecked")
+			Map<String, Object> searchMap = (Map<String, Object>)param.get("searchMap");
+			String searchCondition = StringUtil.nullCheck(searchMap.get("searchCondition"));
+			String searchKeyword = StringUtil.nullCheck(searchMap.get("searchKeyword"));
+
+			Map<String, Object> paginationhMap = (Map<String, Object>)param.get("pagination");
+			String page = StringUtil.nullCheck(paginationhMap.get("page"));
+			String size = StringUtil.nullCheck(paginationhMap.get("size"));
+			
+			SampleCodeVo sampleCodeVo = new SampleCodeVo();
+			sampleCodeVo.setSearchCondition(searchCondition);
+			sampleCodeVo.setSearchKeyword(searchKeyword);
+			sampleCodeVo.setPage(Integer.parseInt(page));
+			sampleCodeVo.setSize(Integer.parseInt(size));
+			
+			int totalCnt = codeService.selectCommonCodeCnt(sampleCodeVo);
+			
+			List<Map<String, Object>> codeList = new ArrayList<Map<String, Object>>(); 
+			if (totalCnt > 0) {
+				codeList = codeService.selectCommonCodeList(sampleCodeVo);
+			}			
+			result.setData("totalCnt", String.valueOf(totalCnt));
+			result.setData("commonCodeList", codeList);
+			
+			/* 결과 메시지 세팅 */
+			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.setMsg(result.STATUS_ERROR, "");
+		}
+
+		return result.getResult();
+	}
+    
+    @PostMapping(value = "/sample/commonCode/commonCodeList1")
+    @SuppressWarnings("unchecked")
+	public Map<String, Object> getCommonCodeList1(@RequestBody SampleCodeParam param) {
+		Result result = new Result();
+		
+		try {
 			Map<String, Object> searchMap = (Map<String, Object>)param.getSearchMap();
-			String searchCondition = (String)searchMap.get("searchCondition");
-			String searchKeyword = (String)searchMap.get("searchKeyword");
+			String searchCondition = StringUtil.nullCheck(searchMap.get("searchCondition"));
+			String searchKeyword = StringUtil.nullCheck(searchMap.get("searchKeyword"));
 			
 			SampleCodeVo sampleCodeVo = new SampleCodeVo();
 			sampleCodeVo.setSearchCondition(searchCondition);
 			sampleCodeVo.setSearchKeyword(searchKeyword);
 			
-			Page<Map<String, Object>> codeList = codeService.selectCommonCodeList(sampleCodeVo, param.getPagination().pageable());
+			Page<Map<String, Object>> codeList = codeService.selectCommonCodeList1(sampleCodeVo, param.getPagination().pageable());
 			result.setData("totalCnt", String.valueOf(codeList.getTotalElements()));
 			result.setData("commonCodeList", codeList.getContent());
 			
@@ -145,12 +185,31 @@ public class SampleController {
 		return result.getResult();
 	}
     
+    @PostMapping(value = "/sample/sampleCommonCode/commonCodeList")
+	public Map<String, Object> getSampleCommonCodeList() {
+		Result result = new Result();
+		
+		try {
+			List<Map<String, Object>> codeList = codeService.selectSampleCommonCodeList();
+			// result.setData("totalCnt", String.valueOf(codeList.getTotalElements()));
+			// result.setData("commonCodeList", codeList.getContent());
+			
+			/* 결과 메시지 세팅 */
+			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.setMsg(result.STATUS_ERROR, "");
+		}
+
+		return result.getResult();
+	}
+    
     @PostMapping(value = "/sample/commonCode/selectCodeDetailList")
+    @SuppressWarnings("unchecked")
 	public Map<String, Object> selectCodeDetailList(@RequestBody Map<String, Object> param) {
     	Result result = new Result();
 		
 		try {
-			@SuppressWarnings("unchecked")
 			Map<String, Object> commonCodeMap = (Map<String, Object>)param.get("commonCodeMap");
 			String commonCodeId = (String)commonCodeMap.get("commonCodeId");
 			
@@ -168,17 +227,15 @@ public class SampleController {
 	}
     
     @PostMapping(value = "/sample/commonCode/saveCommonCodeDetailList")
+    @SuppressWarnings("unchecked")
 	public Map<String, Object> saveCommonCodeDetailList(@RequestBody Map<String, Object> param) {
     	Result result = new Result();
 		
 		try {
-			@SuppressWarnings("unchecked")
 			Map<String, Object> commonCodeMap = (Map<String, Object>)param.get("commonCodeMap");
 			String commonCodeId = (String)commonCodeMap.get("commonCodeId");
 			
-			@SuppressWarnings("unchecked")
 			List<Map<String, Object>> commonCodeList = (List<Map<String, Object>>)param.get("commonCodeList");
-			@SuppressWarnings("unchecked")
 			List<Map<String, Object>> codeDetailList = (List<Map<String, Object>>)param.get("codeDetailList");
 			
 			SampleCodeVo sampleCodeVo = new SampleCodeVo();
