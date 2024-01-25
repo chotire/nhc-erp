@@ -14,6 +14,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserInfo extends HashMap<String, Object> {
+	
+	private boolean isAuthenticated;
 	private String tenant;
 	private String userId;
 	private String userNm;

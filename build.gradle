@@ -28,13 +28,9 @@ dependencies {
     implementation 'sdcit.prunus:prunus-websquare-adaptor'
     implementation 'sdcit.prunus:prunus-multidatasource'
     implementation 'sdcit.prunus:prunus-persistence-mybatis'
-    implementation "sdcit.prunus.biz:prunus-biz-common-code:${prunusVersion}"
-    implementation "sdcit.prunus.biz:prunus-biz-acl-menu:${prunusVersion}"
-    implementation "sdcit.prunus.biz:prunus-biz-acl-resource:${prunusVersion}"
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
     implementation 'tmaxsoft.tibero:tibero6-jdbc:1.1'
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.10'
-    implementation 'com.h2database:h2'
     
     // for JSP
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'

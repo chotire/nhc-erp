@@ -22,8 +22,11 @@ public class UserInfoArgumentResolver implements HandlerMethodArgumentResolver {
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
 			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	UserInfo userInfo = (UserInfo)authentication.getDetails();
-		
+    	
+    	UserInfo userInfo = authentication.isAuthenticated() 
+    						? (UserInfo)authentication.getDetails()
+    						: UserInfo.builder().isAuthenticated(false).build();
+    	    	
     	return userInfo;
 	}	
 }
