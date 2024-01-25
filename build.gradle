@@ -26,7 +26,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'sdcit.prunus:prunus-security'
     implementation 'sdcit.prunus:prunus-websquare-adaptor'
-    implementation 'sdcit.prunus:prunus-multidatasource'
     implementation 'sdcit.prunus:prunus-persistence-mybatis'
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
     implementation 'tmaxsoft.tibero:tibero6-jdbc:1.1'

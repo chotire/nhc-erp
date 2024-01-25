@@ -13,11 +13,10 @@ import nhc.erp.common.Constants;
 import nhc.erp.common.util.StringUtil;
 import nhc.erp.sample.mapper.SampleCodeMapper;
 import nhc.erp.sample.vo.SampleCodeVo;
-import prunus.datasource.annotation.DataSourceName;
 import prunus.persistence.data.pagination.Paging;
 
 @Service
-@DataSourceName("nhcerp")
+// @DataSourceName("nhcerp")
 public class SampleCodeService {
 	@Autowired
 	private SampleCodeMapper mapper;

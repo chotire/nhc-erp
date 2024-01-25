@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 
 import nhc.erp.sample.mapper.SampleMapper;
 import nhc.erp.sample.vo.SampleVo;
-import prunus.datasource.annotation.DataSourceName;
 import prunus.persistence.data.pagination.Paging;
 
 @Service
-@DataSourceName("nhcerp")
+// @DataSourceName("nhcerp")
 public class SampleService {
 	@Autowired
 	private SampleMapper mapper;

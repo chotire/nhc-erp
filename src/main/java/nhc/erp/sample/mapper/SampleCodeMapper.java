@@ -7,9 +7,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import nhc.erp.persistence.mybatis.config.NhcerpSQLConnMapper;
 import nhc.erp.sample.vo.SampleCodeVo;
 
 @Mapper
+@NhcerpSQLConnMapper
 public interface SampleCodeMapper {
 	int selectCommonCodeCnt(SampleCodeVo sampleCodeVo);
 	

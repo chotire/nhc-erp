@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 
 import nhc.erp.sample.mapper.SampleMenuMapper;
 import nhc.erp.sample.vo.SampleMenuVo;
-import prunus.datasource.annotation.DataSourceName;
 
 @Service
-@DataSourceName("nhcerp")
+// @DataSourceName("nhcerp")
 public class SampleMenuService {
 	@Autowired
 	private SampleMenuMapper mapper;

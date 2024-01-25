@@ -51,7 +51,7 @@ public class SampleController {
      */
     @GetMapping(value = "/samplePageList")
     public List<SampleVo> getPageList(SampleVo sampleVo, Pageable pageable, @LoginInfo UserInfo userInfo) {
-    	System.err.println(userInfo.toString());
+    	System.out.println(userInfo.toString());
     	return service.getPageList(sampleVo, pageable);
     }
     
