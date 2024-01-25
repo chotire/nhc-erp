@@ -1,5 +1,7 @@
 package nhc.erp.common.resolver;
 
+import java.util.Optional;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,11 +24,6 @@ public class UserInfoArgumentResolver implements HandlerMethodArgumentResolver {
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
 			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	
-    	UserInfo userInfo = authentication.isAuthenticated() 
-    						? (UserInfo)authentication.getDetails()
-    						: UserInfo.builder().isAuthenticated(false).build();
-    	    	
-    	return userInfo;
+    	return (UserInfo)authentication.getDetails();
 	}	
 }
