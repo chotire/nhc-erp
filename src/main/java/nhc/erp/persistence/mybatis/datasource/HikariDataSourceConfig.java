@@ -7,7 +7,7 @@ import com.zaxxer.hikari.HikariConfig;
 
 public class HikariDataSourceConfig {
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.hikari.tibero")
+    @ConfigurationProperties(prefix = "spring.datasource.nhcerp")
     public HikariConfig tibero() {
     	return new HikariConfig();
     }

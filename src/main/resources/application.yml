@@ -11,7 +11,17 @@ spring:
     database: oracle
     hibernate:
       ddl-auto: none
-    open-in-view: false           # JPA 를 사용하는 프로젝트는 반드시 open-in-view 속성을 false 로 지정하세요.   
+    open-in-view: false           # JPA 를 사용하는 프로젝트는 반드시 open-in-view 속성을 false 로 지정하세요.
+  datasource:
+    nhcerp:
+      driver-class-name: com.tmax.tibero.jdbc.TbDriver
+      jdbc-url: jdbc:tibero:thin:@192.168.0.28:8629:tibero
+      username: nhcerp
+      password: nhcerp1215
+      hikari:
+        connection-timeout: 300000
+        max-pool-size: 10
+        max-lifetime: 200000
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -50,7 +60,7 @@ prunus:
       pagination.enabled: true
 logging:
   level:
-    nhc.erp: info
+    nhc.erp: debug
     prunus: debug
     org.hibernate.SQL: info
     root: info

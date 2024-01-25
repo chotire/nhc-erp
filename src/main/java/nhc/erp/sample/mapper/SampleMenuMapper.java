@@ -5,11 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import nhc.erp.persistence.mybatis.config.WrmSQLConnMapper;
 import nhc.erp.sample.vo.SampleMenuVo;
 
 @Mapper
-@WrmSQLConnMapper
 public interface SampleMenuMapper {
 	List<Map<String, Object>> selectMenuList(SampleMenuVo sampleMenuVo);
 	
