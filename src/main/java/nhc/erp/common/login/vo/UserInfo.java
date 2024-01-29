@@ -13,6 +13,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("serial")
 public class UserInfo extends HashMap<String, Object> {
 	private String tenant;
 	private String userId;

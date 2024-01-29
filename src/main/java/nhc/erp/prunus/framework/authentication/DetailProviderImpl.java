@@ -25,12 +25,10 @@ public class DetailProviderImpl implements DetailsProvider {
      */
     @Override
     public Map<String, Object> getDetails(HttpServletRequest request, String tenant, String username) {
-    	UserInfo userInfo = UserInfo.builder().tenant(tenant)
-											.userId(username)
-											.userNm("농협관리자")
-											.deptCd("00000")
-											.deptNm("IT유지보수").build();
-    	
-    	return userInfo;
+    	return UserInfo.builder().tenant(tenant)
+								.userId(username)
+								.userNm("농협관리자")
+								.deptCd("00000")
+								.deptNm("IT유지보수").build();
     }
 }

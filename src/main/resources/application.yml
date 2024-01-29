@@ -40,7 +40,7 @@ prunus:
       maximum-password-age: 90      # 비밀번호 유효기간
       maximum-failed-attempts: 5
       lock-time-duration: 3600000   # 1시간
-      mode: SESSION      
+      mode: session      
     access:
       whitelisted-endpoints:
         - /**
