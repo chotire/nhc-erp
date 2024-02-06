@@ -10,7 +10,6 @@ import nhc.erp.sample.mapper.SampleMenuMapper;
 import nhc.erp.sample.vo.SampleMenuVo;
 
 @Service
-// @DataSourceName("nhcerp")
 public class SampleMenuService {
 	@Autowired
 	private SampleMenuMapper mapper;

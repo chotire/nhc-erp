@@ -13,16 +13,16 @@ public class DataSourceConfig {
     private final Map<String, HikariConfig> hikariDataSourceConfig;
 
     public DataSourceConfig(Map<String, HikariConfig> hikariDataSourceConfig) {
-        this.hikariDataSourceConfig = hikariDataSourceConfig;
+    	this.hikariDataSourceConfig = hikariDataSourceConfig;
     }
 
     @Bean
     public DataSourceResolver dataSourceResolver() {
-        return new DataSourceResolver(hikariDataSourceConfig, DEFAULT_DATASOURCE_NAME);
+    	return new DataSourceResolver(hikariDataSourceConfig, DEFAULT_DATASOURCE_NAME);
     }
 
     @Bean
     public DataSource routingDataSource(DataSourceResolver dataSourceResolver) {
-        return new RoutingDataSource(dataSourceResolver);
+    	return new RoutingDataSource(dataSourceResolver);
     }
 }

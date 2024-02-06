@@ -5,16 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import nhc.erp.common.vo.SearchVo;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
-public class SampleCodeVo extends SearchVo {
+public class SampleCodeVo {
 	private String searchCondition;
 	private String searchKeyword;
 	

@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @SuppressWarnings("serial")
 public class UserInfo extends HashMap<String, Object> {
-	private String tenant;
+    private String tenant;
 	private String userId;
 	private String userNm;
 	private String deptCd;

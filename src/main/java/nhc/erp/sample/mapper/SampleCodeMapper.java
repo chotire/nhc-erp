@@ -11,12 +11,11 @@ import nhc.erp.sample.vo.SampleCodeVo;
 
 @Mapper
 public interface SampleCodeMapper {
+	Page<Map<String, Object>> selectCommonCodeList(SampleCodeVo sampleCodeVo, Pageable pageable);
+	
 	int selectCommonCodeCnt(SampleCodeVo sampleCodeVo);
 	
-	List<Map<String, Object>> selectCommonCodeList(SampleCodeVo sampleCodeVo);
-	
-	// List<Map<String, Object>> selectCommonCodeList(SampleCodeVo sampleCodeVo, Pageable pageable);
-	Page<Map<String, Object>> selectCommonCodeList1(SampleCodeVo sampleCodeVo, Pageable pageable);
+	List<Map<String, Object>> selectCommonCodeList1(SampleCodeVo sampleCodeVo);
 	
 	List<Map<String, Object>> selectSampleCommonCodeList();
 	

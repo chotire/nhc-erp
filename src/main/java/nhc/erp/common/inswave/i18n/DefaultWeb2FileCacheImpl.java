@@ -33,7 +33,7 @@ public class DefaultWeb2FileCacheImpl extends AbstractWeb2File {
 			GMLXMLBaseDir = wc.getStringValue("/websquare/i18n/xmlInfo/@baseDir", "");
 			GMLXMLBaseUrl = wc.getStringValue("/websquare/i18n/xmlInfo/@baseUrl", "url");
 			String strCache = wc.getStringValue("/websquare/i18n/xmlInfo/@cache", "false");
-			if (strCache != null && strCache.toLowerCase().equals("true")) {
+			if (strCache != null && "true".equals(strCache.toLowerCase())) {
 				useCache = true;
 			}
 			
@@ -46,11 +46,11 @@ public class DefaultWeb2FileCacheImpl extends AbstractWeb2File {
 				excludeList = excludeStr.split(",");
 			}
 			
-			LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] ################### Initialize DefaultWeb2FileCacheImpl #####################");
-            LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] baseDir           : " + GMLXMLBaseDir);
+			LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] ##################### Initialize DefaultWeb2FileCacheImpl #####################");
+            LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] baseDir           	: " + GMLXMLBaseDir);
             LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] url  		: " + GMLXMLBaseUrl);
             LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] useCache        	: " + useCache);
-            LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] storageType	: " + storageType);
+            LogUtil.severe("[DefaultWeb2FileCacheImpl.initialize] storageType		: " + storageType);
 		} catch (Exception e) {
 			LogUtil.exception("[DefaultWeb2FileCacheImpl.initialize] Exception occurs", e );
 			throw e;
@@ -115,7 +115,7 @@ public class DefaultWeb2FileCacheImpl extends AbstractWeb2File {
 					localeHash.put(locale, result);
 				}
 			} else {
-				result = getContents( fullFilePath , locale, request );
+				result = getContents(fullFilePath, locale, request);
 			}			
 		} catch (Exception e) {
 			LogUtil.exception("[DefaultWeb2FileCacheImpl.getW2xPath] Exception occurs.", e);
@@ -215,7 +215,7 @@ public class DefaultWeb2FileCacheImpl extends AbstractWeb2File {
 			}
 			
 			if (is == null) {
-				throw new Exception("InputStream is null. check out the application xml path.[storageType:" + this.storageType + ", path:" + fullFilePath + "]");
+				throw new Exception("InputStream is null. check out the application xml path.[storageType : " + this.storageType + ", path : " + fullFilePath + "]");
 			}
 			
 			String fileStr = StreamUtil.getString(is, "UTF-8");

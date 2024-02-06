@@ -10,6 +10,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import nhc.erp.common.login.vo.UserInfo;
+import nhc.erp.common.util.ConvertUtil;
 
 @Component
 public class UserInfoArgumentResolver implements HandlerMethodArgumentResolver {
@@ -19,9 +20,8 @@ public class UserInfoArgumentResolver implements HandlerMethodArgumentResolver {
 	}
 	
 	@Override
-	public UserInfo resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+	public UserInfo resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	return (UserInfo)authentication.getDetails();
+    	return ConvertUtil.convertMapToObject(ConvertUtil.convertObjectToMap(authentication.getDetails()), UserInfo.class);
 	}	
 }

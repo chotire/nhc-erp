@@ -17,8 +17,6 @@ import prunus.persistence.data.pagination.Pagination;
 @NoArgsConstructor
 @ToString
 public class SampleCodeParam {
-	private static final long serialVersionUID = 1L;
-	
 	private Map<String, Object> searchMap;
 	private Pagination pagination;
 }

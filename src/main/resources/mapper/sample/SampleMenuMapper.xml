@@ -32,11 +32,11 @@
 				  FROM BM_MENU M, BM_PROGRAM P
 				 WHERE M.PROGRAM_CD = P.PROGRAM_CD
 				   AND M.IS_USE = 'Y'
-				) M INNER JOIN (SELECT EMP_CD
-									 , MENU_CD 
-								  FROM BM_FAVORITE 
-								 WHERE EMP_CD = #{empCd}
-							   ) F ON F.MENU_CD = M.MENU_CD
+			   ) M INNER JOIN (SELECT EMP_CD
+									, MENU_CD 
+								 FROM BM_FAVORITE 
+								WHERE EMP_CD = #{empCd}
+							  ) F ON F.MENU_CD = M.MENU_CD
 	   ORDER BY M.MENU_NM ASC
     </select>
     <select id="selectProgramAuthorityList" parameterType="nhc.erp.sample.vo.SampleMenuVo" resultType="java.util.Map">

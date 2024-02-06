@@ -15,7 +15,7 @@ public class DataSourceResolver {
 
     public DataSourceResolver(Map<String, HikariConfig> hikariDataSourceConfig, String defaultDatasourceName) {
         this.dataSources = new HashMap<>(hikariDataSourceConfig.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, entry -> new HikariDataSource(entry.getValue()))));
+        		.collect(Collectors.toMap(Map.Entry::getKey, entry -> new HikariDataSource(entry.getValue()))));
         this.defaultDatasourceName = defaultDatasourceName;
         DataSourceNameContextHolder.set(defaultDatasourceName);
     }

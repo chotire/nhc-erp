@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import nhc.erp.common.inswave.util.Result;
 import nhc.erp.common.login.annotation.LoginInfo;
 import nhc.erp.common.login.vo.UserInfo;
-import nhc.erp.common.util.StringUtil;
 import nhc.erp.sample.service.SampleCodeService;
 import nhc.erp.sample.service.SampleService;
 import nhc.erp.sample.vo.SampleCodeParam;
@@ -51,7 +51,7 @@ public class SampleController {
      */
     @GetMapping(value = "/samplePageList")
     public List<SampleVo> getPageList(SampleVo sampleVo, Pageable pageable, @LoginInfo UserInfo userInfo) {
-    	System.out.println(userInfo.toString());
+    	System.out.println(userInfo.getTenant());
     	return service.getPageList(sampleVo, pageable);
     }
     
@@ -112,96 +112,96 @@ public class SampleController {
 			result.setData("useYnList", useYnList);
 			
 			/* 결과 메시지 세팅 */
-			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
+			result.setStatusMsg(Result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			result.setMsg(result.STATUS_ERROR, "");
+			result.setMsg(Result.STATUS_ERROR, "");
 		}
 		
 		return result.getResult();
 	}
     
     @PostMapping(value = "/sample/commonCode/commonCodeList")
-    @SuppressWarnings("unchecked")
-	public Map<String, Object> getCommonCodeList(@RequestBody Map<String, Object> param) {
+	public Map<String, Object> getCommonCodeList(@RequestBody SampleCodeParam param) {
 		Result result = new Result();
 		
 		try {
-			Map<String, Object> searchMap = (Map<String, Object>)param.get("searchMap");
-			String searchCondition = StringUtil.nullCheck(searchMap.get("searchCondition"));
-			String searchKeyword = StringUtil.nullCheck(searchMap.get("searchKeyword"));
-
-			Map<String, Object> paginationhMap = (Map<String, Object>)param.get("pagination");
-			String page = StringUtil.nullCheck(paginationhMap.get("page"));
-			String size = StringUtil.nullCheck(paginationhMap.get("size"));
+			Map<String, Object> searchMap = (Map<String, Object>)param.getSearchMap();
+			String searchCondition = Objects.toString(searchMap.get("searchCondition"));
+			String searchKeyword = Objects.toString(searchMap.get("searchKeyword"));
 			
 			SampleCodeVo sampleCodeVo = new SampleCodeVo();
 			sampleCodeVo.setSearchCondition(searchCondition);
 			sampleCodeVo.setSearchKeyword(searchKeyword);
-			sampleCodeVo.setPage(Integer.parseInt(page));
-			sampleCodeVo.setSize(Integer.parseInt(size));
+			
+			Page<Map<String, Object>> codeList = codeService.selectCommonCodeList(sampleCodeVo, param.getPagination().pageable());
+			result.setData("totalCnt", String.valueOf(codeList.getTotalElements()));
+			result.setData("commonCodeList", codeList.getContent());
+			
+			/* 결과 메시지 세팅 */
+			result.setStatusMsg(Result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			result.setMsg(Result.STATUS_ERROR, "");
+		}
+
+		return result.getResult();
+	}
+    
+    @PostMapping(value = "/sample/commonCode/noUseCommonCodeList")
+    @SuppressWarnings("unchecked")
+    @Deprecated
+	public Map<String, Object> getNoUseCommonCodeList(@RequestBody Map<String, Object> param) {
+		Result result = new Result();
+		
+		try {
+			Map<String, Object> searchMap = (Map<String, Object>)param.get("searchMap");
+			String searchCondition = Objects.toString(searchMap.get("searchCondition"));
+			String searchKeyword = Objects.toString(searchMap.get("searchKeyword"));
+
+			// Map<String, Object> paginationhMap = (Map<String, Object>)param.get("pagination");
+			// String page = StringUtil.nullCheck(paginationhMap.get("page"));
+			// String size = StringUtil.nullCheck(paginationhMap.get("size"));
+			
+			SampleCodeVo sampleCodeVo = new SampleCodeVo();
+			sampleCodeVo.setSearchCondition(searchCondition);
+			sampleCodeVo.setSearchKeyword(searchKeyword);
+			// sampleCodeVo.setPage(Integer.parseInt(page));
+			// sampleCodeVo.setSize(Integer.parseInt(size));
 			
 			int totalCnt = codeService.selectCommonCodeCnt(sampleCodeVo);
 			
 			List<Map<String, Object>> codeList = new ArrayList<Map<String, Object>>(); 
 			if (totalCnt > 0) {
-				codeList = codeService.selectCommonCodeList(sampleCodeVo);
+				codeList = codeService.selectCommonCodeList1(sampleCodeVo);
 			}			
 			result.setData("totalCnt", String.valueOf(totalCnt));
 			result.setData("commonCodeList", codeList);
 			
 			/* 결과 메시지 세팅 */
-			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
+			result.setStatusMsg(Result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			result.setMsg(result.STATUS_ERROR, "");
+			result.setMsg(Result.STATUS_ERROR, "");
 		}
 
 		return result.getResult();
 	}
     
-    @PostMapping(value = "/sample/commonCode/commonCodeList1")
-    @SuppressWarnings("unchecked")
-	public Map<String, Object> getCommonCodeList1(@RequestBody SampleCodeParam param) {
-		Result result = new Result();
-		
-		try {
-			Map<String, Object> searchMap = (Map<String, Object>)param.getSearchMap();
-			String searchCondition = StringUtil.nullCheck(searchMap.get("searchCondition"));
-			String searchKeyword = StringUtil.nullCheck(searchMap.get("searchKeyword"));
-			
-			SampleCodeVo sampleCodeVo = new SampleCodeVo();
-			sampleCodeVo.setSearchCondition(searchCondition);
-			sampleCodeVo.setSearchKeyword(searchKeyword);
-			
-			Page<Map<String, Object>> codeList = codeService.selectCommonCodeList1(sampleCodeVo, param.getPagination().pageable());
-			result.setData("totalCnt", String.valueOf(codeList.getTotalElements()));
-			result.setData("commonCodeList", codeList.getContent());
-			
-			/* 결과 메시지 세팅 */
-			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			result.setMsg(result.STATUS_ERROR, "");
-		}
-
-		return result.getResult();
-	}
-    
-    @PostMapping(value = "/sample/sampleCommonCode/commonCodeList")
+    @PostMapping(value = "/sample/commonCode/sampleCommonCodeList")
 	public Map<String, Object> getSampleCommonCodeList() {
 		Result result = new Result();
 		
 		try {
-			List<Map<String, Object>> codeList = codeService.selectSampleCommonCodeList();
+			// List<Map<String, Object>> codeList = codeService.selectSampleCommonCodeList();
 			// result.setData("totalCnt", String.valueOf(codeList.getTotalElements()));
 			// result.setData("commonCodeList", codeList.getContent());
 			
 			/* 결과 메시지 세팅 */
-			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
+			result.setStatusMsg(Result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			result.setMsg(result.STATUS_ERROR, "");
+			result.setMsg(Result.STATUS_ERROR, "");
 		}
 
 		return result.getResult();
@@ -220,10 +220,10 @@ public class SampleController {
 			result.setData("codeDetailList", codeList);
 			
 			/* 결과 메시지 세팅 */
-			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
+			result.setStatusMsg(Result.STATUS_SUCESS, "코드정보가 조회 되었습니다.");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			result.setMsg(result.STATUS_ERROR, "");
+			result.setMsg(Result.STATUS_ERROR, "");
 		}
 
 		return result.getResult();
@@ -249,10 +249,10 @@ public class SampleController {
 			codeService.saveCommonCodeDetailList(sampleCodeVo);
 			
 			/* 결과 메시지 세팅 */
-			result.setStatusMsg(result.STATUS_SUCESS, "코드정보가 저장 되었습니다.");
+			result.setStatusMsg(Result.STATUS_SUCESS, "코드정보가 저장 되었습니다.");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			result.setMsg(result.STATUS_ERROR, "");
+			result.setMsg(Result.STATUS_ERROR, "");
 		}
 
 		return result.getResult();

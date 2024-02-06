@@ -5,8 +5,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 
 import org.springframework.jdbc.support.JdbcUtils;
-
-import nhc.erp.common.util.StringUtil;
+import org.springframework.util.StringUtils;
 
 @SuppressWarnings("serial")
 public class CommonHashMap<K, V> extends HashMap<K, V> implements Serializable {
@@ -30,14 +29,13 @@ public class CommonHashMap<K, V> extends HashMap<K, V> implements Serializable {
 	 * @param value  명시된 key 에 대한 값 (변경 없음)
 	 * @return V 키와 관련한 기존 값. 없거나 null 인경우 null 반환
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
+	@SuppressWarnings("unchecked")
 	public V put(final K key, final V value) {
 		if (!putCamelCaseKey) {
 			return super.put(key, value);
 		}
 
-		// return super.put((K)(CamelUtil.convert2CamelCase((String) key)), value);
 		return super.put((K)(JdbcUtils.convertUnderscoreNameToPropertyName((String) key)), value);
 	}
 
@@ -71,8 +69,8 @@ public class CommonHashMap<K, V> extends HashMap<K, V> implements Serializable {
 		int intVal = 0;
 		String stringVal = this.getString(key);
 
-		if (StringUtil.isNotEmpty(stringVal)) {
-			intVal	= Integer.parseInt(stringVal);
+		if (StringUtils.hasText(stringVal)) {
+			intVal = Integer.parseInt(stringVal);
 		}
 
 		return intVal;

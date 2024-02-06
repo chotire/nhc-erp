@@ -42,14 +42,14 @@
     <update id="updateSampleData" parameterType="nhc.erp.sample.vo.SampleVo">
     	/* SampleMapper.updateSampleData */
         UPDATE LAPTOP
-           SET VENDOR       = #{vendor}
+           SET VENDOR = #{vendor}
              , DISPLAY_SIZE = #{displaySize}
-         WHERE ID           = #{id}
+         WHERE ID = #{id}
     </update>
     <delete id="deleteSampleData" parameterType="string">
     	/* SampleMapper.deleteSampleData */
         UPDATE LAPTOP
            SET DELETED = 1
-         WHERE ID      		= #{id}
+         WHERE ID = #{id}
     </delete>
 </mapper>

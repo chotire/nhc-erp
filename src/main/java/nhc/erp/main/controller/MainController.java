@@ -48,10 +48,10 @@ public class MainController {
 			result.setData("dlt_programAuthority", authorityList);
 			
 			/* 결과 메시지 세팅 */
-			result.setStatusMsg(result.STATUS_SUCESS, "메뉴정보가 조회 되었습니다.");
+			result.setStatusMsg(Result.STATUS_SUCESS, "메뉴정보가 조회 되었습니다.");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			result.setMsg(result.STATUS_ERROR, "");
+			result.setMsg(Result.STATUS_ERROR, "");
 		}
 
 		return result.getResult();

@@ -19,8 +19,7 @@ public class ArgumentInjectionInterceptor implements Interceptor {
 		Object[] args = invocation.getArgs();
 		Object param = args[1];
 		
-		//Todo... sql 실행 전 공통된 Argument들을 주입하기 주입하기 위한 인터셉터 처리
-		
+		// TODO... SQL 실행 전 공통된 Argument들을 주입하기 주입하기 위한 인터셉터 처리
 		return invocation.proceed();
 	}
 }

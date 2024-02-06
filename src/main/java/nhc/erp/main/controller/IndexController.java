@@ -19,7 +19,7 @@ public class IndexController {
     	return "websquare/websquare";
     }
     
-    public String ex() {
-        throw new RuntimeException("xxxxx");
-    }
+	public String ex() {
+    	throw new RuntimeException("xxxxx");
+	}
 }

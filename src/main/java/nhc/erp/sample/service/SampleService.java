@@ -12,7 +12,6 @@ import nhc.erp.sample.vo.SampleVo;
 import prunus.persistence.data.pagination.Paging;
 
 @Service
-// @DataSourceName("nhcerp")
 public class SampleService {
 	@Autowired
 	private SampleMapper mapper;

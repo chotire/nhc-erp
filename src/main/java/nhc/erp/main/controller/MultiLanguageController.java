@@ -37,7 +37,6 @@ public class MultiLanguageController {
 	@GetMapping(value = "/clearCache")
 	@ResponseBody
 	public void clearCache(HttpServletRequest request, HttpServletResponse response) {
-
 		try {
 			// 다국어 메시지 캐시 삭제
 			LabelMessageLoader.getInstance().reload();
@@ -54,7 +53,7 @@ public class MultiLanguageController {
 	 */
 	@GetMapping(value = "/I18N")
 	@ResponseBody
-	public void processMultiLang(HttpServletRequest request, HttpServletResponse response) {
+	public void processMultiLanguage(HttpServletRequest request, HttpServletResponse response) {
 		HTTPContext frameworkContext = null;
 		ServletOutputStream os = null;
 
